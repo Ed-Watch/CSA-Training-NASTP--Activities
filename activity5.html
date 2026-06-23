@@ -1,584 +1,735 @@
-<!-- End Page -->
-  <div id="end" class="hidden w-full max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl glass p-4 sm:p-6 md:p-8 lg:p-12 rounded-2xl sm:rounded-3xl shadow-2xl text-center card-entrance">
-    <div class="mb-6 sm:mb-8">
-      <div class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl mb-4">🎯</div>
-      <h1 class="responsive-title font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-2 sm:mb-4">
-        Time's Up!
-      </h1>
-      <div class="inline-block px-3 sm:px-4 py-1 sm:py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full text-xs sm:text-sm font-semibold shadow-lg mb-4 sm:mb-6">
-        Preparation Complete
-      </div>
-    </div>
-    
-    <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 md:p-8 mb-6 sm:mb-8 border border-green-200">
-      <p class="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed">
-        Now the trainer will ask any <strong class="text-green-700">3 questions</strong> from the CFO. 
-        Be ready to respond <strong class="text-red-600">quickly and decisively</strong>.
-      </p>
-    </div>
-    
-    <button onclick="goHome()" class="btn-success text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg w-full sm:w-auto">
-      🏠 Back to Home
-    </button>
-  </div>  <!-- Second Page: Questions + Timer -->
-  <div id="questions" class="hidden w-full max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-6xl glass p-3 sm:p-4 md:p-6 lg:p-8 xl:p-12 rounded-2xl sm:rounded-3xl shadow-2xl">
-    <header class="text-center mb-4 sm:mb-6 md:mb-8">
-      <h1 class="responsive-title font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-2 sm:mb-4">
-        CFO Quickfire Prompts
-      </h1>
-      <p class="text-gray-700 text-sm sm:text-base md:text-lg px-2">Choose one team member as CFO. You have limited time to prepare.</p>
-    </header>
-
-    <div class="bg-gradient-to-r from-red-500 to-orange-500 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 mb-4 sm:mb-6 md:mb-8 text-center shadow-lg">
-      <div id="timer" class="responsive-timer font-black text-white">
-        Time Left: 15:00
-      </div>
-      <div class="mt-2 h-2 sm:h-3 bg-white bg-opacity-30 rounded-full overflow-hidden">
-        <div id="progressBar" class="h-full bg-white rounded-full transition-all duration-1000" style="width: 100%;"></div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 shadow-inner border border-gray-200">
-      <h3 class="text-base sm:text-lg md:text-xl font-bold mb-3 sm:mb-4 md:mb-6 text-center text-gray-800 flex items-center justify-center">
-        <svg class="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 mr-1 sm:mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"/>
-        </svg>
-        <span class="text-sm sm:text-base md:text-xl">Executive Challenge Questions</span>
-      </h3>
-      <div class="grid gap-2 sm:gap-3 md:gap-4">
-        <div class="question-item bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">1</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">We missed budget by 6%, top three levers to check?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">2</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">Profit ↑ but operating cash ↓, two likely reasons?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">3</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">CTI worsened despite revenue growth, three actions?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">4</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">CASA fell 4%, commercial response?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-red-50 to-pink-50 border border-red-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">5</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">NPLs up 80 bps, what now?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">6</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">Provisions spike, what to tell the board?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">7</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">Choose 1 KPI each for Liquidity, Profitability, Asset Quality, Capital.</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">8</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">New project with payback 5 yrs, NPV small positive, greenlight?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-violet-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">9</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">Regulator indicates CAR headroom thinning, two options?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-6 h-6 sm:w-7 md:w-8 sm:h-7 md:h-8 bg-pink-500 text-white rounded-full flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 md:mr-4 mt-0.5 sm:mt-1">10</span>
-            <span class="text-gray-800 font-medium text-sm sm:text-base">Variance favorable by 3%, celebrate or dig?</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-
-  </div><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Activity 5 - CFO Drill</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Climate Activities 1 & 2 – ed-watch</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* Animated gradient background */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+
+    /* Deep teal-to-slate animated background */
     .animated-bg {
-      background: linear-gradient(-45deg, #1e3a8a, #3730a3, #7c3aed, #be185d);
+      background: linear-gradient(-45deg, #0f4c5c, #1a3a4a, #0d6e6e, #1c3f5e);
       background-size: 400% 400%;
-      animation: gradientShift 12s ease infinite;
+      animation: gradientShift 14s ease infinite;
     }
-    
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    /* Floating geometric shapes */
+    /* Floating leaf/wave shapes */
     .floating-shape {
       position: absolute;
-      opacity: 0.1;
-      animation: float 8s ease-in-out infinite;
+      opacity: 0.07;
+      animation: floatAnim 10s ease-in-out infinite;
+      pointer-events: none;
     }
-    
-    .shape-1 { width: 60px; height: 60px; background: #ffffff; border-radius: 50%; top: 10%; left: 10%; animation-delay: 0s; }
-    .shape-2 { width: 40px; height: 40px; background: #ffffff; top: 20%; right: 20%; animation-delay: 2s; }
-    .shape-3 { width: 80px; height: 80px; background: #ffffff; border-radius: 50%; bottom: 20%; left: 15%; animation-delay: 4s; }
-    .shape-4 { width: 30px; height: 30px; background: #ffffff; top: 60%; right: 10%; animation-delay: 6s; }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.1; }
-      50% { transform: translateY(-30px) rotate(180deg); opacity: 0.3; }
+    @keyframes floatAnim {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-28px) rotate(15deg); }
     }
 
-    /* Glass morphism effect */
     .glass {
-      background: rgba(255, 255, 255, 0.95);
+      background: rgba(255,255,255,0.97);
       backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.3);
+      border: 1px solid rgba(255,255,255,0.4);
     }
 
-    /* Enhanced button animations */
+    .card-entrance {
+      animation: slideUp 0.5s ease-out;
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Primary CTA */
     .btn-primary {
-      background: linear-gradient(135deg, #3b82f6, #6366f1);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      background: linear-gradient(135deg, #0d9488, #0891b2);
+      transition: all 0.25s ease;
     }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: -100%;
-      width: 100%;
-      height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-      transition: left 0.5s;
-    }
-
-    .btn-primary:hover::before {
-      left: 100%;
-    }
-
     .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(59, 130, 246, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(13,148,136,0.4);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      transition: all 0.25s ease;
+    }
+    .btn-secondary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(99,102,241,0.35);
     }
 
     .btn-success {
       background: linear-gradient(135deg, #10b981, #059669);
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      transition: all 0.25s ease;
     }
-
     .btn-success:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 30px rgba(16, 185, 129, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(16,185,129,0.35);
     }
 
-    /* Timer animation */
-    .timer-critical {
-      animation: pulse-critical 1s ease-in-out infinite;
-      color: #ef4444 !important;
+    /* Option buttons */
+    .option-btn {
+      border: 2px solid #e5e7eb;
+      background: #f9fafb;
+      transition: all 0.18s ease;
+      cursor: pointer;
+      border-radius: 10px;
+      padding: 10px 16px;
+      text-align: left;
+      width: 100%;
+    }
+    .option-btn:hover:not(:disabled) {
+      border-color: #0d9488;
+      background: #f0fdfa;
+      transform: translateX(4px);
+    }
+    .option-btn.correct {
+      border-color: #10b981;
+      background: #d1fae5;
+    }
+    .option-btn.wrong {
+      border-color: #ef4444;
+      background: #fee2e2;
+    }
+    .option-btn:disabled { cursor: default; }
+
+    /* Progress dots */
+    .dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: #d1d5db;
+      transition: background 0.3s;
+    }
+    .dot.active  { background: #0d9488; }
+    .dot.done    { background: #10b981; }
+    .dot.wrong-dot { background: #ef4444; }
+
+    /* Score badge */
+    .score-ring {
+      width: 96px; height: 96px;
+      border-radius: 50%;
+      border: 6px solid #10b981;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.75rem; font-weight: 800;
+      color: #065f46;
     }
 
-    @keyframes pulse-critical {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.6; }
+    /* Classification chip */
+    .chip {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.18s;
+    }
+    .chip:hover:not(.chip-selected):not(.chip-disabled) {
+      opacity: 0.8;
     }
 
-    /* Question list styling */
-    .question-item {
-      transition: all 0.2s ease;
-      border-radius: 8px;
-      padding: 12px;
+    /* Activity selector tabs */
+    .tab-btn {
+      transition: all 0.2s;
+      border-bottom: 3px solid transparent;
+      padding: 8px 18px;
+      font-weight: 600;
+      font-size: 0.875rem;
+      color: #6b7280;
+      cursor: pointer;
+    }
+    .tab-btn.active {
+      border-bottom-color: #0d9488;
+      color: #0d9488;
+    }
+    .tab-btn:hover:not(.active) {
+      color: #374151;
     }
 
-    .question-item:hover {
-      background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
-      transform: translateX(8px);
-      border-left: 4px solid #3b82f6;
+    /* Timer pulse */
+    .timer-warn { animation: pulseWarn 0.9s ease-in-out infinite; }
+    @keyframes pulseWarn {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.55; }
     }
 
-    /* Card animations */
-    .card-entrance {
-      animation: slideInUp 0.6s ease-out;
+    /* Feedback ribbon */
+    .feedback-correct {
+      background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46;
+      border-radius: 8px; padding: 10px 14px;
+    }
+    .feedback-wrong {
+      background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b;
+      border-radius: 8px; padding: 10px 14px;
     }
 
-    @keyframes slideInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
+    /* Classify game */
+    .classify-item {
+      background: #f1f5f9;
+      border: 2px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 10px 14px;
+      transition: all 0.2s;
+    }
+    .classify-item.answered { border-color: #a7f3d0; background: #ecfdf5; }
+    .classify-item.answered-wrong { border-color: #fca5a5; background: #fff1f2; }
+
+    /* Scrollable on small screens */
+    .scroll-container {
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
     }
 
-    /* Comprehensive responsive improvements */
     @media (max-width: 640px) {
-      .glass {
-        margin: 0.5rem;
-        max-height: calc(100vh - 1rem);
-        overflow-y: auto;
-        padding: 1rem !important;
-      }
-      
-      .question-item {
-        padding: 8px;
-        font-size: 0.875rem;
-      }
-      
-      .floating-shape {
-        display: none;
-      }
+      .scroll-container { max-height: calc(100vh - 1rem); }
     }
 
-    @media (min-width: 641px) and (max-width: 1024px) {
-      .glass {
-        margin: 1rem;
-        max-height: calc(100vh - 2rem);
-        overflow-y: auto;
-      }
-    }
-
-    @media (min-width: 1025px) and (max-width: 1440px) {
-      .glass {
-        max-height: calc(100vh - 4rem);
-        overflow-y: auto;
-      }
-    }
-
-    @media (min-width: 1441px) {
-      .glass {
-        max-height: calc(100vh - 6rem);
-        overflow-y: auto;
-      }
-    }
-
-    /* Mobile-first responsive text sizing */
-    .responsive-title {
-      font-size: 1.5rem;
-    }
-    
-    @media (min-width: 640px) {
-      .responsive-title { font-size: 2rem; }
-    }
-    
-    @media (min-width: 768px) {
-      .responsive-title { font-size: 2.5rem; }
-    }
-    
-    @media (min-width: 1024px) {
-      .responsive-title { font-size: 3rem; }
-    }
-
-    /* Responsive timer sizing */
-    .responsive-timer {
-      font-size: 2rem;
-    }
-    
-    @media (min-width: 640px) {
-      .responsive-timer { font-size: 2.5rem; }
-    }
-    
-    @media (min-width: 768px) {
-      .responsive-timer { font-size: 3rem; }
-    }
-    
-    @media (min-width: 1024px) {
-      .responsive-timer { font-size: 4rem; }
-    }
-
-    /* Success animation */
-    .success-pulse {
-      animation: successPulse 0.6s ease-out;
-    }
-
-    @keyframes successPulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
+    .hidden { display: none !important; }
   </style>
 </head>
-<body class="animated-bg min-h-screen flex justify-center items-center p-1 sm:p-2 md:p-4 lg:p-6 xl:p-8 relative overflow-hidden">
+<body class="animated-bg min-h-screen flex justify-center items-start p-2 sm:p-4 md:p-6 relative overflow-hidden">
 
-  <!-- Floating shapes -->
-  <div class="floating-shape shape-1"></div>
-  <div class="floating-shape shape-2"></div>
-  <div class="floating-shape shape-3"></div>
-  <div class="floating-shape shape-4"></div>
+  <!-- Decorative blobs -->
+  <div class="floating-shape" style="width:120px;height:120px;background:#fff;border-radius:60% 40% 70% 30%;top:8%;left:6%;animation-delay:0s;"></div>
+  <div class="floating-shape" style="width:80px;height:80px;background:#fff;border-radius:30% 70% 40% 60%;top:15%;right:8%;animation-delay:3s;"></div>
+  <div class="floating-shape" style="width:100px;height:100px;background:#fff;border-radius:50%;bottom:12%;left:10%;animation-delay:5s;"></div>
+  <div class="floating-shape" style="width:60px;height:60px;background:#fff;bottom:20%;right:12%;animation-delay:7s;"></div>
 
-  <!-- First Page: Objective & Instructions -->
-  <div id="instructions" class="w-full max-w-xs sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl glass p-3 sm:p-4 md:p-6 lg:p-8 xl:p-12 rounded-2xl sm:rounded-3xl shadow-2xl card-entrance">
-    <header class="text-center mb-4 sm:mb-6 md:mb-8">
-      <h1 class="responsive-title font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-        Activity 5: CFO Quickfire Drill
-      </h1>
-      <div class="inline-block px-2 sm:px-3 md:px-4 py-1 sm:py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-full text-xs sm:text-sm font-semibold shadow-lg">
-        Executive Decision Training
-      </div>
-    </header>
-
-    <div class="grid gap-3 sm:gap-4 md:gap-6 lg:gap-8 md:grid-cols-2">
-      <div class="bg-gradient-to-br from-blue-50 to-indigo-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border border-blue-200">
-        <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center mb-2 sm:mb-4">
-          <svg class="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 mr-2 sm:mr-3 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
-            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-          </svg>
-          Objective
-        </h2>
-        <p class="text-gray-700 text-sm sm:text-base md:text-lg leading-relaxed">
-          Practice strategic framing and rapid prioritization under intense time pressure in executive scenarios.
-        </p>
+  <!-- ===== HOME ===== -->
+  <div id="page-home" class="w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
+    <div class="p-5 sm:p-8 md:p-10">
+      <div class="text-center mb-6">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-teal-600 bg-teal-50 px-3 py-1 rounded-full mb-3">ed-watch Training</span>
+        <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 leading-tight mb-2">
+          Climate Scenario Analysis
+        </h1>
+        <p class="text-gray-500 text-sm sm:text-base">Interactive activities for sustainability reporting professionals</p>
       </div>
 
-      <div class="bg-gradient-to-br from-purple-50 to-pink-100 rounded-xl sm:rounded-2xl p-3 sm:p-4 md:p-6 border border-purple-200">
-        <h2 class="text-lg sm:text-xl font-bold text-gray-800 flex items-center mb-2 sm:mb-4">
-          <svg class="w-4 h-4 sm:w-5 md:w-6 sm:h-5 md:h-6 mr-2 sm:mr-3 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-            <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/>
-          </svg>
-          Format
-        </h2>
-        <div class="space-y-2 sm:space-y-3 text-gray-700 text-sm sm:text-base">
-          <div class="flex items-start">
-            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 sm:mt-2 mr-2 sm:mr-3 flex-shrink-0"></span>
-            <span>One participant per team becomes <strong class="text-purple-700">"CFO"</strong></span>
+      <div class="grid gap-4 sm:grid-cols-2 mt-8">
+        <!-- Activity 1 card -->
+        <div class="rounded-2xl border-2 border-teal-100 bg-gradient-to-br from-teal-50 to-cyan-50 p-5">
+          <div class="text-2xl mb-2">🌍</div>
+          <div class="text-xs font-bold text-teal-600 uppercase tracking-wider mb-1">Activity 1</div>
+          <h2 class="text-lg font-bold text-gray-800 mb-1">"Choose the Scenario" Challenge</h2>
+          <p class="text-sm text-gray-600 mb-4">Match real-world situations to NGFS / IPCC climate scenarios. 5 questions, instant feedback.</p>
+          <div class="flex gap-2 text-xs text-gray-500">
+            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">⏱ 5–7 min</span>
+            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">5 questions</span>
           </div>
-          <div class="flex items-start">
-            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 sm:mt-2 mr-2 sm:mr-3 flex-shrink-0"></span>
-            <span>Facilitator fires <strong>3 quick prompts</strong></span>
+          <button onclick="startActivity1()" class="btn-primary text-white w-full mt-4 py-2.5 rounded-xl font-bold text-sm">
+            Start Activity 1 →
+          </button>
+        </div>
+
+        <!-- Activity 2 card -->
+        <div class="rounded-2xl border-2 border-indigo-100 bg-gradient-to-br from-indigo-50 to-violet-50 p-5">
+          <div class="text-2xl mb-2">⚡</div>
+          <div class="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1">Activity 2</div>
+          <h2 class="text-lg font-bold text-gray-800 mb-1">"Risk or Data Source?" Rapid Classification</h2>
+          <p class="text-sm text-gray-600 mb-4">Classify climate risks and data sources into the correct categories. Two fast rounds.</p>
+          <div class="flex gap-2 text-xs text-gray-500">
+            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">⏱ 5–8 min</span>
+            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">2 rounds</span>
           </div>
-          <div class="flex items-start">
-            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 sm:mt-2 mr-2 sm:mr-3 flex-shrink-0"></span>
-            <span>CFO answers in <strong class="text-red-600">≤30 seconds each</strong></span>
-          </div>
-          <div class="flex items-start">
-            <span class="w-1.5 h-1.5 sm:w-2 sm:h-2 bg-purple-500 rounded-full mt-1.5 sm:mt-2 mr-2 sm:mr-3 flex-shrink-0"></span>
-            <span>Teammates can pass <strong class="text-green-600">1 note per question</strong></span>
-          </div>
+          <button onclick="startActivity2()" class="btn-secondary text-white w-full mt-4 py-2.5 rounded-xl font-bold text-sm">
+            Start Activity 2 →
+          </button>
         </div>
       </div>
-    </div>
 
-    <div class="mt-4 sm:mt-6 md:mt-8 text-center">
-      <button onclick="startActivity()" class="btn-primary text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-lg sm:rounded-xl font-bold text-sm sm:text-base md:text-lg shadow-lg relative w-full sm:w-auto">
-        <span class="relative z-10">🚀 Start CFO Drill</span>
-      </button>
+      <p class="text-center text-xs text-gray-400 mt-6">Trainer: Sana Quadri &nbsp;|&nbsp; Karachi, June 2026</p>
     </div>
   </div>
 
-  <!-- Second Page: Questions + Timer -->
-  <div id="questions" class="hidden w-full max-w-5xl glass p-6 sm:p-8 lg:p-12 rounded-3xl shadow-2xl">
-    <header class="text-center mb-8">
-      <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-red-600 to-orange-600 bg-clip-text text-transparent mb-4">
-        CFO Quickfire Prompts
-      </h1>
-      <p class="text-gray-700 text-lg">Choose one team member as CFO. You have limited time to prepare.</p>
-    </header>
-
-    <div class="bg-gradient-to-r from-red-500 to-orange-500 rounded-2xl p-6 mb-8 text-center shadow-lg">
-      <div id="timer" class="text-3xl sm:text-4xl lg:text-5xl font-black text-white">
-        Time Left: 60s
+  <!-- ===== ACTIVITY 1: INSTRUCTIONS ===== -->
+  <div id="page-a1-intro" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
+    <div class="p-5 sm:p-8 md:p-10">
+      <div class="text-center mb-6">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-teal-600 bg-teal-50 px-3 py-1 rounded-full mb-3">Activity 1</span>
+        <div class="text-4xl mb-2">🌍</div>
+        <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-2">"Choose the Scenario" Challenge</h1>
+        <p class="text-gray-500 text-sm">Test your understanding of NGFS and IPCC climate scenarios.</p>
       </div>
-      <div class="mt-2 h-3 bg-white bg-opacity-30 rounded-full overflow-hidden">
-        <div id="progressBar" class="h-full bg-white rounded-full transition-all duration-1000" style="width: 100%;"></div>
-      </div>
-    </div>
-
-    <div class="bg-white rounded-2xl p-6 shadow-inner border border-gray-200">
-      <h3 class="text-xl font-bold mb-6 text-center text-gray-800 flex items-center justify-center">
-        <svg class="w-6 h-6 mr-2 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-8-3a1 1 0 00-.867.5 1 1 0 11-1.731-1A3 3 0 0113 8a3.001 3.001 0 01-2 2.83V11a1 1 0 11-2 0v-1a1 1 0 011-1 1 1 0 100-2zm0 8a1 1 0 100-2 1 1 0 000 2z"/>
-        </svg>
-        Executive Challenge Questions
-      </h3>
-      <div class="grid gap-3 sm:gap-4">
-        <div class="question-item bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-blue-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">1</span>
-            <span class="text-gray-800 font-medium">We missed budget by 6%, top three levers to check?</span>
-          </div>
+      <div class="grid gap-4 sm:grid-cols-2 mb-6">
+        <div class="bg-teal-50 border border-teal-200 rounded-xl p-4">
+          <div class="font-bold text-teal-800 mb-1 text-sm">🎯 Objective</div>
+          <p class="text-sm text-gray-700">Match each real-world policy situation to the correct climate scenario (NGFS / IPCC).</p>
         </div>
-        
-        <div class="question-item bg-gradient-to-r from-green-50 to-emerald-50 border border-green-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-green-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">2</span>
-            <span class="text-gray-800 font-medium">Profit ↑ but operating cash ↓, two likely reasons?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-purple-50 to-violet-50 border border-purple-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-purple-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">3</span>
-            <span class="text-gray-800 font-medium">CTI worsened despite revenue growth, three actions?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-orange-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">4</span>
-            <span class="text-gray-800 font-medium">CASA fell 4%, commercial response?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-red-50 to-pink-50 border border-red-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-red-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">5</span>
-            <span class="text-gray-800 font-medium">NPLs up 80 bps, what now?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-yellow-50 to-amber-50 border border-yellow-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-yellow-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">6</span>
-            <span class="text-gray-800 font-medium">Provisions spike, what to tell the board?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-teal-50 to-cyan-50 border border-teal-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-teal-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">7</span>
-            <span class="text-gray-800 font-medium">Choose 1 KPI each for Liquidity, Profitability, Asset Quality, Capital.</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-indigo-50 to-blue-50 border border-indigo-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-indigo-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">8</span>
-            <span class="text-gray-800 font-medium">New project with payback 5 yrs, NPV small positive, greenlight?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-violet-50 to-purple-50 border border-violet-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-violet-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">9</span>
-            <span class="text-gray-800 font-medium">Regulator indicates CAR headroom thinning, two options?</span>
-          </div>
-        </div>
-        
-        <div class="question-item bg-gradient-to-r from-pink-50 to-rose-50 border border-pink-200">
-          <div class="flex items-start">
-            <span class="flex-shrink-0 w-8 h-8 bg-pink-500 text-white rounded-full flex items-center justify-center text-sm font-bold mr-4 mt-1">10</span>
-            <span class="text-gray-800 font-medium">Variance favorable by 3%, celebrate or dig?</span>
-          </div>
+        <div class="bg-cyan-50 border border-cyan-200 rounded-xl p-4">
+          <div class="font-bold text-cyan-800 mb-1 text-sm">📋 Format</div>
+          <ul class="text-sm text-gray-700 space-y-1">
+            <li>• 5 multiple-choice questions</li>
+            <li>• Instant feedback after each answer</li>
+            <li>• Debrief discussion at the end</li>
+          </ul>
         </div>
       </div>
-    </div>
-
-    <div class="mt-8 bg-amber-50 border border-amber-200 rounded-xl p-4">
-      <div class="flex items-center">
-        <svg class="w-5 h-5 text-amber-600 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z"/>
-        </svg>
-        <p class="text-amber-800 font-medium">
-          <strong>Facilitator will select 3 questions.</strong> CFO has ≤30 seconds per response. Team can pass 1 note per question.
-        </p>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <button onclick="goHome()" class="border-2 border-gray-300 text-gray-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition">← Home</button>
+        <button onclick="beginA1()" class="btn-primary text-white px-8 py-2.5 rounded-xl font-bold text-sm">Start →</button>
       </div>
     </div>
   </div>
 
-  <!-- End Page -->
-  <div id="end" class="hidden w-full max-w-4xl glass p-6 sm:p-8 lg:p-12 rounded-3xl shadow-2xl text-center card-entrance">
-    <div class="mb-8">
-      <div class="text-6xl sm:text-7xl mb-4">🎯</div>
-      <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent mb-4">
-        Time's Up!
-      </h1>
-      <div class="inline-block px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 text-white rounded-full text-sm font-semibold shadow-lg mb-6">
-        Preparation Complete
+  <!-- ===== ACTIVITY 1: QUESTION ===== -->
+  <div id="page-a1-q" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
+    <div class="p-5 sm:p-7 md:p-9">
+      <!-- Header -->
+      <div class="flex items-center justify-between mb-5">
+        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Activity 1</span>
+        <div class="flex gap-1.5" id="a1-dots"></div>
       </div>
+
+      <!-- Progress bar -->
+      <div class="w-full h-1.5 bg-gray-100 rounded-full mb-6 overflow-hidden">
+        <div id="a1-progress" class="h-full bg-teal-500 rounded-full transition-all duration-500" style="width:0%"></div>
+      </div>
+
+      <div class="mb-1">
+        <span class="text-xs font-semibold text-gray-400" id="a1-q-label">Question 1 of 5</span>
+      </div>
+      <p class="text-base sm:text-lg font-semibold text-gray-800 mb-4 leading-snug" id="a1-q-text"></p>
+
+      <div class="grid gap-2 mb-4" id="a1-options"></div>
+      <div id="a1-feedback" class="hidden mb-4 text-sm font-medium"></div>
+      <button id="a1-next-btn" class="hidden btn-primary text-white w-full py-2.5 rounded-xl font-bold text-sm" onclick="a1Next()">Next Question →</button>
     </div>
-    
-    <div class="bg-gradient-to-br from-green-50 to-emerald-100 rounded-2xl p-8 mb-8 border border-green-200">
-      <p class="text-xl text-gray-700 leading-relaxed">
-        Now the trainer will ask any <strong class="text-green-700">3 questions</strong> from the CFO. 
-        Be ready to respond <strong class="text-red-600">quickly and decisively</strong>.
-      </p>
-    </div>
-    
-    <button onclick="goHome()" class="btn-success text-white px-8 py-4 rounded-xl font-bold text-lg shadow-lg">
-      🏠 Back to Home
-    </button>
   </div>
 
-  <script>
-    let timeLeft = 900;
-    let timerInterval;
-    const totalTime = 900;
+  <!-- ===== ACTIVITY 1: RESULTS ===== -->
+  <div id="page-a1-end" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
+    <div class="p-5 sm:p-8 md:p-10 text-center">
+      <div class="text-4xl mb-3">🎯</div>
+      <h2 class="text-2xl font-black text-gray-900 mb-1">Activity 1 Complete!</h2>
+      <p class="text-gray-500 text-sm mb-6">Your scenario identification results</p>
+      <div class="flex justify-center mb-6">
+        <div class="score-ring" id="a1-score-display">—</div>
+      </div>
+      <div id="a1-score-label" class="text-base font-semibold text-gray-700 mb-6"></div>
 
-    function updateProgress() {
-      const progress = (timeLeft / totalTime) * 100;
-      document.getElementById('progressBar').style.width = `${progress}%`;
+      <!-- Debrief -->
+      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
+        <div class="font-bold text-amber-800 mb-2 text-sm">💬 Debrief Discussion</div>
+        <ul class="text-sm text-gray-700 space-y-1">
+          <li>• Why do <strong>Delayed Transition</strong> scenarios carry the <em>highest transition risk</em>? (sudden policy shock)</li>
+          <li>• Why does <strong>Hot House World</strong> carry the <em>highest physical risk</em>? (unmitigated warming)</li>
+          <li>• Where does <strong>Net Zero 2050</strong> sit in the risk trade-off?</li>
+        </ul>
+      </div>
+
+      <div class="flex gap-3 justify-center flex-wrap">
+        <button onclick="retryA1()" class="border-2 border-teal-500 text-teal-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-50 transition">↺ Retry</button>
+        <button onclick="startActivity2()" class="btn-secondary text-white px-8 py-2.5 rounded-xl font-bold text-sm">Activity 2 →</button>
+        <button onclick="goHome()" class="border-2 border-gray-300 text-gray-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition">🏠 Home</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 2: INSTRUCTIONS ===== -->
+  <div id="page-a2-intro" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
+    <div class="p-5 sm:p-8 md:p-10">
+      <div class="text-center mb-6">
+        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full mb-3">Activity 2</span>
+        <div class="text-4xl mb-2">⚡</div>
+        <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-2">"Risk or Data Source?" Rapid Classification</h1>
+        <p class="text-gray-500 text-sm">Classify climate risks and data sources correctly.</p>
+      </div>
+      <div class="grid gap-4 sm:grid-cols-2 mb-6">
+        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
+          <div class="font-bold text-indigo-800 mb-1 text-sm">🎯 Objective</div>
+          <p class="text-sm text-gray-700">Test understanding of climate risk types and practical data source identification.</p>
+        </div>
+        <div class="bg-violet-50 border border-violet-200 rounded-xl p-4">
+          <div class="font-bold text-violet-800 mb-1 text-sm">📋 Format</div>
+          <ul class="text-sm text-gray-700 space-y-1">
+            <li>• Round 1: Risk Classification (4 items)</li>
+            <li>• Round 2: Data Source Classification (4 items)</li>
+            <li>• Tap each item's correct category</li>
+          </ul>
+        </div>
+      </div>
+      <div class="flex gap-3 justify-center flex-wrap">
+        <button onclick="goHome()" class="border-2 border-gray-300 text-gray-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition">← Home</button>
+        <button onclick="beginA2()" class="btn-secondary text-white px-8 py-2.5 rounded-xl font-bold text-sm">Start →</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 2: ROUND ===== -->
+  <div id="page-a2-round" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
+    <div class="p-5 sm:p-7 md:p-9">
+      <div class="flex items-center justify-between mb-1">
+        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider" id="a2-round-label">Round 1</span>
+        <span class="text-xs text-gray-400" id="a2-score-inline">0 / 0 correct</span>
+      </div>
+      <h2 class="text-lg sm:text-xl font-black text-gray-900 mb-1" id="a2-round-title"></h2>
+      <p class="text-sm text-gray-500 mb-5" id="a2-round-instruction"></p>
+
+      <!-- Category legend -->
+      <div class="flex flex-wrap gap-2 mb-5" id="a2-legend"></div>
+
+      <!-- Items -->
+      <div class="grid gap-3" id="a2-items"></div>
+
+      <button id="a2-next-btn" class="hidden btn-secondary text-white w-full mt-6 py-2.5 rounded-xl font-bold text-sm" onclick="a2Advance()">Continue →</button>
+    </div>
+  </div>
+
+  <!-- ===== ACTIVITY 2: RESULTS ===== -->
+  <div id="page-a2-end" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
+    <div class="p-5 sm:p-8 md:p-10 text-center">
+      <div class="text-4xl mb-3">🏆</div>
+      <h2 class="text-2xl font-black text-gray-900 mb-1">Activity 2 Complete!</h2>
+      <p class="text-gray-500 text-sm mb-6">Classification results</p>
+      <div class="flex justify-center mb-4">
+        <div class="score-ring" id="a2-score-display">—</div>
+      </div>
+      <div id="a2-score-label" class="text-base font-semibold text-gray-700 mb-6"></div>
+
+      <!-- Key insights -->
+      <div class="bg-sky-50 border border-sky-200 rounded-xl p-4 mb-6 text-left">
+        <div class="font-bold text-sky-800 mb-2 text-sm">💡 Key Takeaways</div>
+        <ul class="text-sm text-gray-700 space-y-1.5">
+          <li>• <strong>Physical risk</strong> = damage caused by climate events (floods, fires, drought)</li>
+          <li>• <strong>Transition risk</strong> = economic impact of shifting to low-carbon economy (policy, tech, market)</li>
+          <li>• <strong>NGFS Portal & IEA</strong> are scenario frameworks; <strong>ERA5</strong> is observed climate data; <strong>MSCI Climate</strong> is financial/sector data</li>
+        </ul>
+      </div>
+
+      <div class="flex gap-3 justify-center flex-wrap">
+        <button onclick="retryA2()" class="border-2 border-indigo-500 text-indigo-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-indigo-50 transition">↺ Retry</button>
+        <button onclick="goHome()" class="btn-success text-white px-8 py-2.5 rounded-xl font-bold text-sm">🏠 Home</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+// ─────────────────────────────────────
+// DATA
+// ─────────────────────────────────────
+
+const A1_QUESTIONS = [
+  {
+    q: "A government introduces carbon taxes immediately, invests heavily in renewables, and reaches net zero by 2050.",
+    options: ["Delayed Transition", "Hot House World", "Net Zero 2050", "SSP5-8.5"],
+    correct: 2
+  },
+  {
+    q: "Countries delay climate action until 2030 and then rapidly introduce strict policies.",
+    options: ["Net Zero 2050", "Delayed Transition", "Below 2°C", "SSP1-1.9"],
+    correct: 1
+  },
+  {
+    q: "Current policies continue with little additional climate action.",
+    options: ["Hot House World", "Net Zero 2050", "SSP1-2.6", "Below 2°C"],
+    correct: 0
+  },
+  {
+    q: "Which scenario generally has the highest physical risk?",
+    options: ["Net Zero 2050", "Below 2°C", "Delayed Transition", "Hot House World"],
+    correct: 3
+  },
+  {
+    q: "Which scenario usually carries the highest transition risk?",
+    options: ["Net Zero 2050", "Delayed Transition", "Hot House World", "SSP5-8.5"],
+    correct: 1
+  }
+];
+
+const A2_ROUNDS = [
+  {
+    id: "risk",
+    label: "Round 1 of 2",
+    title: "Risk Classification",
+    instruction: "For each item, select whether it is a Physical Risk or a Transition Risk.",
+    categories: ["Physical Risk", "Transition Risk"],
+    colors: ["#0d9488", "#6366f1"],
+    items: [
+      { text: "Flooding of coastal facilities",     correct: 0 },
+      { text: "Carbon tax increase",                correct: 1 },
+      { text: "Wildfires affecting assets",         correct: 0 },
+      { text: "Stranded fossil fuel assets",        correct: 1 }
+    ]
+  },
+  {
+    id: "data",
+    label: "Round 2 of 2",
+    title: "Data Source Classification",
+    instruction: "For each data source, select the correct category.",
+    categories: ["Scenario Framework", "Physical Climate Data", "Financial / Sector Data"],
+    colors: ["#0891b2", "#059669", "#7c3aed"],
+    items: [
+      { text: "NGFS Portal",        correct: 0 },
+      { text: "ERA5",               correct: 1 },
+      { text: "MSCI Climate",       correct: 2 },
+      { text: "IEA Energy Outlook", correct: 0 }
+    ]
+  }
+];
+
+// ─────────────────────────────────────
+// PAGE MANAGEMENT
+// ─────────────────────────────────────
+
+function showOnly(id) {
+  ['page-home','page-a1-intro','page-a1-q','page-a1-end',
+   'page-a2-intro','page-a2-round','page-a2-end'].forEach(p => {
+    document.getElementById(p).classList.add('hidden');
+  });
+  const el = document.getElementById(id);
+  el.classList.remove('hidden');
+  el.classList.remove('card-entrance');
+  void el.offsetWidth;
+  el.classList.add('card-entrance');
+  window.scrollTo(0,0);
+}
+
+function goHome() { showOnly('page-home'); }
+function startActivity1() { showOnly('page-a1-intro'); }
+function startActivity2() { showOnly('page-a2-intro'); }
+
+// ─────────────────────────────────────
+// ACTIVITY 1
+// ─────────────────────────────────────
+
+let a1Index = 0, a1Score = 0, a1Answered = [];
+
+function beginA1() {
+  a1Index = 0; a1Score = 0; a1Answered = [];
+  showOnly('page-a1-q');
+  renderA1();
+}
+function retryA1() { beginA1(); }
+
+function renderA1() {
+  const q = A1_QUESTIONS[a1Index];
+  document.getElementById('a1-q-label').textContent = `Question ${a1Index+1} of ${A1_QUESTIONS.length}`;
+  document.getElementById('a1-q-text').textContent = q.q;
+  document.getElementById('a1-feedback').classList.add('hidden');
+  document.getElementById('a1-next-btn').classList.add('hidden');
+  document.getElementById('a1-progress').style.width = `${(a1Index / A1_QUESTIONS.length) * 100}%`;
+
+  // Dots
+  const dotsEl = document.getElementById('a1-dots');
+  dotsEl.innerHTML = '';
+  A1_QUESTIONS.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (i < a1Index) d.classList.add(a1Answered[i] ? 'done' : 'wrong-dot');
+    else if (i === a1Index) d.classList.add('active');
+    dotsEl.appendChild(d);
+  });
+
+  // Options
+  const optsEl = document.getElementById('a1-options');
+  optsEl.innerHTML = '';
+  const labels = ['A', 'B', 'C', 'D'];
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn flex items-center gap-3 text-sm sm:text-base';
+    btn.innerHTML = `<span class="flex-shrink-0 w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-gray-600">${labels[i]}</span><span>${opt}</span>`;
+    btn.onclick = () => a1Answer(i);
+    optsEl.appendChild(btn);
+  });
+}
+
+function a1Answer(chosen) {
+  const q = A1_QUESTIONS[a1Index];
+  const btns = document.querySelectorAll('#a1-options .option-btn');
+  btns.forEach(b => b.disabled = true);
+
+  const correct = chosen === q.correct;
+  a1Answered.push(correct);
+  if (correct) a1Score++;
+
+  btns[chosen].classList.add(correct ? 'correct' : 'wrong');
+  if (!correct) btns[q.correct].classList.add('correct');
+
+  const fb = document.getElementById('a1-feedback');
+  fb.className = correct ? 'feedback-correct mb-4 text-sm font-medium' : 'feedback-wrong mb-4 text-sm font-medium';
+  fb.innerHTML = correct
+    ? `✅ Correct! <strong>${q.options[q.correct]}</strong> is the right scenario.`
+    : `❌ Not quite. The correct answer is <strong>${q.options[q.correct]}</strong>.`;
+  fb.classList.remove('hidden');
+
+  const nextBtn = document.getElementById('a1-next-btn');
+  nextBtn.classList.remove('hidden');
+  if (a1Index === A1_QUESTIONS.length - 1) {
+    nextBtn.textContent = 'See Results →';
+  } else {
+    nextBtn.textContent = 'Next Question →';
+  }
+}
+
+function a1Next() {
+  a1Index++;
+  if (a1Index >= A1_QUESTIONS.length) {
+    showA1Results();
+  } else {
+    renderA1();
+  }
+}
+
+function showA1Results() {
+  showOnly('page-a1-end');
+  document.getElementById('a1-score-display').textContent = `${a1Score}/${A1_QUESTIONS.length}`;
+  const pct = a1Score / A1_QUESTIONS.length;
+  let label = pct === 1 ? '🌟 Perfect score! Excellent scenario knowledge.' :
+              pct >= 0.6 ? '👍 Good work! Review any missed scenarios.' :
+              '📚 Keep studying — scenario selection is a key skill.';
+  document.getElementById('a1-score-label').textContent = label;
+  document.getElementById('a1-progress').style.width = '100%';
+}
+
+// ─────────────────────────────────────
+// ACTIVITY 2
+// ─────────────────────────────────────
+
+let a2RoundIdx = 0, a2TotalCorrect = 0, a2TotalItems = 0;
+let a2ItemState = []; // per-item: null | correct | wrong
+
+function beginA2() {
+  a2RoundIdx = 0; a2TotalCorrect = 0; a2TotalItems = 0;
+  showOnly('page-a2-round');
+  renderA2Round();
+}
+function retryA2() { beginA2(); }
+
+function renderA2Round() {
+  const round = A2_ROUNDS[a2RoundIdx];
+  a2ItemState = round.items.map(() => null);
+  document.getElementById('a2-round-label').textContent = round.label;
+  document.getElementById('a2-round-title').textContent = round.title;
+  document.getElementById('a2-round-instruction').textContent = round.instruction;
+  document.getElementById('a2-next-btn').classList.add('hidden');
+  document.getElementById('a2-score-inline').textContent = '0 / ' + round.items.length + ' correct';
+
+  // Legend
+  const legend = document.getElementById('a2-legend');
+  legend.innerHTML = '';
+  round.categories.forEach((cat, i) => {
+    const chip = document.createElement('span');
+    chip.className = 'chip text-white text-xs';
+    chip.style.background = round.colors[i];
+    chip.textContent = cat;
+    legend.appendChild(chip);
+  });
+
+  // Items
+  const itemsEl = document.getElementById('a2-items');
+  itemsEl.innerHTML = '';
+  round.items.forEach((item, idx) => {
+    const wrapper = document.createElement('div');
+    wrapper.className = 'classify-item';
+    wrapper.id = `a2-item-${idx}`;
+
+    const label = document.createElement('p');
+    label.className = 'text-sm font-semibold text-gray-800 mb-2';
+    label.textContent = item.text;
+
+    const btnsRow = document.createElement('div');
+    btnsRow.className = 'flex flex-wrap gap-2';
+    btnsRow.id = `a2-item-btns-${idx}`;
+
+    round.categories.forEach((cat, catIdx) => {
+      const btn = document.createElement('button');
+      btn.className = 'chip text-xs border-2 bg-white text-gray-700';
+      btn.style.borderColor = round.colors[catIdx];
+      btn.textContent = cat;
+      btn.onclick = () => a2Classify(idx, catIdx);
+      btnsRow.appendChild(btn);
+    });
+
+    const feedback = document.createElement('p');
+    feedback.className = 'text-xs mt-2 hidden font-medium';
+    feedback.id = `a2-item-fb-${idx}`;
+
+    wrapper.appendChild(label);
+    wrapper.appendChild(btnsRow);
+    wrapper.appendChild(feedback);
+    itemsEl.appendChild(wrapper);
+  });
+}
+
+function a2Classify(itemIdx, chosenCat) {
+  if (a2ItemState[itemIdx] !== null) return; // already answered
+  const round = A2_ROUNDS[a2RoundIdx];
+  const item = round.items[itemIdx];
+  const correct = chosenCat === item.correct;
+
+  a2ItemState[itemIdx] = correct ? 'correct' : 'wrong';
+  if (correct) a2TotalCorrect++;
+  a2TotalItems++;
+
+  // Update item wrapper
+  const wrapper = document.getElementById(`a2-item-${itemIdx}`);
+  wrapper.classList.add(correct ? 'answered' : 'answered-wrong');
+
+  // Disable all buttons for this item
+  const btnsRow = document.getElementById(`a2-item-btns-${itemIdx}`);
+  btnsRow.querySelectorAll('button').forEach((b, ci) => {
+    b.disabled = true;
+    if (ci === item.correct) {
+      b.style.background = round.colors[ci];
+      b.style.color = '#fff';
     }
+  });
 
-    function formatTime(seconds) {
-      const minutes = Math.floor(seconds / 60);
-      const remainingSeconds = seconds % 60;
-      return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+  // Show feedback
+  const fb = document.getElementById(`a2-item-fb-${itemIdx}`);
+  fb.classList.remove('hidden');
+  fb.style.color = correct ? '#065f46' : '#991b1b';
+  fb.textContent = correct
+    ? `✅ Correct — ${round.categories[item.correct]}`
+    : `❌ This is ${round.categories[item.correct]}`;
+
+  // Update score display
+  const doneCount = a2ItemState.filter(s => s !== null).length;
+  const correctCount = a2ItemState.filter(s => s === 'correct').length;
+  document.getElementById('a2-score-inline').textContent = `${correctCount} / ${round.items.length} correct`;
+
+  // Show next when all answered
+  if (doneCount === round.items.length) {
+    document.getElementById('a2-next-btn').classList.remove('hidden');
+    if (a2RoundIdx === A2_ROUNDS.length - 1) {
+      document.getElementById('a2-next-btn').textContent = 'See Results →';
+    } else {
+      document.getElementById('a2-next-btn').textContent = 'Next Round →';
     }
+  }
+}
 
-    function startActivity() {
-      document.getElementById("instructions").classList.add("hidden");
-      document.getElementById("questions").classList.remove("hidden");
-      document.getElementById("questions").classList.add("card-entrance");
+function a2Advance() {
+  a2RoundIdx++;
+  if (a2RoundIdx >= A2_ROUNDS.length) {
+    showA2Results();
+  } else {
+    showOnly('page-a2-round');
+    renderA2Round();
+  }
+}
 
-      timerInterval = setInterval(() => {
-        const timerEl = document.getElementById("timer");
-        timerEl.innerText = "Time Left: " + formatTime(timeLeft);
-        
-        // Add critical animation when time is low
-        if (timeLeft <= 60) {
-          timerEl.classList.add("timer-critical");
-        }
-        
-        updateProgress();
-        timeLeft--;
-
-        if (timeLeft < 0) {
-          clearInterval(timerInterval);
-          document.getElementById("questions").classList.add("hidden");
-          document.getElementById("end").classList.remove("hidden");
-          document.getElementById("end").classList.add("card-entrance", "success-pulse");
-        }
-      }, 1000);
-    }
-
-    function goHome() {
-        window.location.href = "index.html"; // redirects to index.html
-    }
-
-    // Initialize progress bar
-    updateProgress();
-  </script>
+function showA2Results() {
+  showOnly('page-a2-end');
+  const total = A2_ROUNDS.reduce((s, r) => s + r.items.length, 0);
+  document.getElementById('a2-score-display').textContent = `${a2TotalCorrect}/${total}`;
+  const pct = a2TotalCorrect / total;
+  let label = pct === 1 ? '🌟 Flawless classification!' :
+              pct >= 0.6 ? '👍 Solid understanding of climate risk and data sources.' :
+              '📚 Review the categories — these distinctions are essential for reporting.';
+  document.getElementById('a2-score-label').textContent = label;
+}
+</script>
 </body>
 </html>
