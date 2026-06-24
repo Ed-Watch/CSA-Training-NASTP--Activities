@@ -41,7 +41,6 @@
       66% { transform: translate(-20px, 20px) rotate(240deg); }
     }
 
-    /* Floating particles */
     .particle {
       position: absolute;
       background: rgba(255, 255, 255, 0.1);
@@ -60,7 +59,6 @@
       50% { transform: translateY(-100px) rotate(180deg); }
     }
 
-    /* Professional Components */
     .glass-card {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
@@ -233,7 +231,6 @@
   </style>
 </head>
 <body class="text-gray-800">
-  <!-- Animated Background -->
   <div class="animated-bg">
     <div class="particle"></div>
     <div class="particle"></div>
@@ -509,6 +506,22 @@
 
   <!-- Enhanced JavaScript -->
   <script>
+    // ---- EdWatch score sync: paste APPS_SCRIPT_URL to match your login page ----
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJ4WSZSJBDwgLdGvY43ygE2hEXlE-1etkOU9GtlqiVfzcH3YdQGWFe2CtBt5013OLLQ/exec';
+    async function saveScoreToSheet(activityKey, score, total) {
+      try {
+        const email = localStorage.getItem('edwatch_email');
+        if (!email) return;
+        // Combine into one "score/total" string since the backend's saveScore()
+        // takes a single score value (no separate total param).
+        const value = total ? `${score}/${total}` : `${score}`;
+        const url = `${APPS_SCRIPT_URL}?action=saveScore&email=${encodeURIComponent(email)}&activity=${encodeURIComponent(activityKey)}&score=${encodeURIComponent(value)}`;
+        await fetch(url);
+      } catch (err) {
+        console.warn('EdWatch: could not save score', err);
+      }
+    }
+
     // Quiz data
     const quizData = {
       q1: {
@@ -714,6 +727,9 @@
       message += `<br><br><strong>Discussion:</strong> The most resilient companies diversify across adaptation, renewable investment, and technology upgrades. Your allocation choice reflects your risk tolerance and strategic priorities.`;
       
       document.getElementById("performance-message").innerHTML = message;
+
+      // Save score to the EdWatch tracking sheet (allocation choice is discussion-only, not scored)
+      saveScoreToSheet('Activity2', quizScore, 3);
 
       goToPage("results");
 

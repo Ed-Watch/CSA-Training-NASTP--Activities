@@ -41,7 +41,6 @@
       66% { transform: translate(-20px, 20px) rotate(240deg); }
     }
 
-    /* Floating particles */
     .particle {
       position: absolute;
       background: rgba(255, 255, 255, 0.1);
@@ -60,7 +59,6 @@
       50% { transform: translateY(-100px) rotate(180deg); }
     }
 
-    /* Professional Components */
     .glass-card {
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(20px);
@@ -302,7 +300,6 @@
   </style>
 </head>
 <body class="text-gray-800">
-  <!-- Animated Background -->
   <div class="animated-bg">
     <div class="particle"></div>
     <div class="particle"></div>
@@ -511,6 +508,22 @@
 
   <!-- Enhanced JavaScript -->
   <script>
+    // ---- EdWatch score sync: paste APPS_SCRIPT_URL to match your login page ----
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJ4WSZSJBDwgLdGvY43ygE2hEXlE-1etkOU9GtlqiVfzcH3YdQGWFe2CtBt5013OLLQ/exechttps://script.google.com/macros/s/AKfycbwyJ4WSZSJBDwgLdGvY43ygE2hEXlE-1etkOU9GtlqiVfzcH3YdQGWFe2CtBt5013OLLQ/exec';
+    async function saveScoreToSheet(activityKey, score, total) {
+      try {
+        const email = localStorage.getItem('edwatch_email');
+        if (!email) return;
+        // Combine into one "score/total" string since the backend's saveScore()
+        // takes a single score value (no separate total param).
+        const value = total ? `${score}/${total}` : `${score}`;
+        const url = `${APPS_SCRIPT_URL}?action=saveScore&email=${encodeURIComponent(email)}&activity=${encodeURIComponent(activityKey)}&score=${encodeURIComponent(value)}`;
+        await fetch(url);
+      } catch (err) {
+        console.warn('EdWatch: could not save score', err);
+      }
+    }
+
     // Classification questions with correct pillars
     const classificationQuestions = [
       {
@@ -747,6 +760,9 @@
       
       document.getElementById("performance-message").innerHTML = message;
 
+      // Save score to the EdWatch tracking sheet (core classification score, out of 10)
+      saveScoreToSheet('Activity4', classificationScore, 10);
+
       goToPage("results");
     }
 
@@ -754,279 +770,6 @@
       document.querySelectorAll("section").forEach(s => {
         s.style.transition = 'opacity 0.3s ease-in-out';
         s.style.opacity = '1';
-      });
-    });
-  </script>
-</body>
-</html>
-      
-  <!-- Page 2: Assessment -->
-  <div id="page2" class="hidden max-w-5xl w-full glass-effect rounded-3xl shadow-2xl p-10 text-center fade-in">
-    <div class="mb-8">
-      <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-purple-500 to-indigo-600 rounded-2xl mb-4">
-        <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-        </svg>
-      </div>
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Assessment In Progress</h1>
-      <p class="text-gray-600 text-lg">You have <strong class="text-purple-600">20 minutes</strong> to complete the Google Sheet assignment.</p>
-    </div>
-
-    <!-- Enhanced Timer -->
-    <div class="mb-8 bg-gradient-to-br from-purple-50 to-indigo-50 rounded-2xl p-6 border border-purple-100">
-      <h2 class="text-lg font-semibold text-gray-700 mb-2 flex items-center justify-center">
-        <svg class="w-5 h-5 mr-2 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        Remaining Time
-      </h2>
-      <div id="timeDisplay" class="text-6xl font-black bg-gradient-to-r from-purple-600 to-indigo-600 bg-clip-text text-transparent timer-glow">20:00</div>
-      <div class="mt-2">
-        <div class="w-full bg-gray-200 rounded-full h-2">
-          <div id="progressBar" class="bg-gradient-to-r from-purple-500 to-indigo-500 h-2 rounded-full transition-all duration-1000" style="width: 100%"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Enhanced Team Selection -->
-    <div class="mb-8">
-      <h3 class="text-xl font-semibold text-gray-800 mb-4 flex items-center justify-center">
-        <svg class="w-6 h-6 mr-2 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
-        </svg>
-        Select Your Team Assignment
-      </h3>
-      <div id="sheetButtons" class="team-grid max-w-4xl mx-auto">
-        <button onclick="openSheet(0)" class="sheetBtn btn-secondary px-6 py-4 text-white rounded-2xl font-semibold flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
-          </svg>
-          Liquidity Legends
-        </button>
-        <button onclick="openSheet(1)" class="sheetBtn btn-secondary px-6 py-4 text-white rounded-2xl font-semibold flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"></path>
-          </svg>
-          Cash Panthers
-        </button>
-        <button onclick="openSheet(2)" class="sheetBtn btn-secondary px-6 py-4 text-white rounded-2xl font-semibold flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
-          </svg>
-          Risk Busters
-        </button>
-        <button onclick="openSheet(3)" class="sheetBtn btn-secondary px-6 py-4 text-white rounded-2xl font-semibold flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"></path>
-          </svg>
-          Credit Crusaders
-        </button>
-        <button onclick="openSheet(4)" class="sheetBtn btn-secondary px-6 py-4 text-white rounded-2xl font-semibold flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
-          </svg>
-          Asset Avengers
-        </button>
-        <button onclick="openSheet(5)" class="sheetBtn btn-secondary px-6 py-4 text-white rounded-2xl font-semibold flex items-center justify-center">
-          <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-          </svg>
-          Margin Mavericks
-        </button>
-      </div>
-    </div>
-
-    <!-- Status Information -->
-    <div class="bg-gradient-to-r from-gray-50 to-slate-50 rounded-2xl p-6 border border-gray-200 mb-8">
-      <div class="flex items-center justify-center text-gray-600">
-        <svg class="w-5 h-5 mr-2 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        <span class="font-medium">Select your team assignment to begin the assessment</span>
-      </div>
-    </div>
-
-    <!-- Enhanced Finish Button -->
-    <div>
-      <button id="finishBtn" disabled class="px-8 py-4 bg-gray-200 text-gray-400 rounded-2xl shadow cursor-not-allowed font-semibold text-lg inline-flex items-center">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-        Complete Assessment
-      </button>
-    </div>
-  </div>
-
-  <!-- Page 3: Completion -->
-  <div id="page3" class="hidden max-w-lg w-full glass-effect rounded-3xl shadow-2xl p-10 text-center fade-in">
-    <div class="mb-6">
-      <div class="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-green-500 to-emerald-600 rounded-2xl mb-4">
-        <svg class="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-        </svg>
-      </div>
-      <h1 class="text-3xl font-bold text-gray-800 mb-2">Assessment Completed</h1>
-      <p class="text-gray-600 text-lg leading-relaxed">
-        Excellent work! Your submission has been recorded successfully. 
-        The evaluation team will review and score your budget analysis.
-      </p>
-    </div>
-    
-    <div class="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-100 mb-6">
-      <div class="flex items-center justify-center text-green-700">
-        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-5 5-5-5h5v-6h-5l5-5 5 5h-5v6z"></path>
-        </svg>
-        <span class="font-medium">Results will be available within few minutes</span>
-      </div>
-    </div>
-    
-    <button onclick="window.location.href='index.html'" class="btn-success px-8 py-4 text-white rounded-2xl font-semibold text-lg inline-flex items-center">
-      <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
-      </svg>
-      Return to Dashboard
-    </button>
-  </div>
-
-  <script>
-    const SHEET_URLS = [
-      "https://docs.google.com/spreadsheets/d/1QIvxtlXuXuIzWUxCBFUCNq4JGFXShAlB/edit?usp=sharing&ouid=103986904667134823600&rtpof=true&sd=true",
-      "https://docs.google.com/spreadsheets/d/1vqI4M6D4wOcra4aqLdMnBwF_2XJ0iblq/edit?usp=sharing&ouid=103986904667134823600&rtpof=true&sd=true",
-      "https://docs.google.com/spreadsheets/d/1AJOMiINfj7vIOgLE9lLSU48vgwYFJNC4/edit?usp=sharing&ouid=103986904667134823600&rtpof=true&sd=true",
-      "https://docs.google.com/spreadsheets/d/1-KZYR-3vYvPydt6l2A1kD95bcgnHtDwI/edit?usp=sharing&ouid=103986904667134823600&rtpof=true&sd=true",
-      "https://docs.google.com/spreadsheets/d/1WPVXxjAXkeAzFb8rGh0DqfUk09ngDq9l/edit?usp=sharing&ouid=103986904667134823600&rtpof=true&sd=true",
-      "https://docs.google.com/spreadsheets/d/17V3wfzs2xqzj3WBXUwvbty_ZM6r5cLnJ/edit?usp=sharing&ouid=103986904667134823600&rtpof=true&sd=true"
-    ];
-
-    let totalSeconds = 20 * 60;
-    let remaining = totalSeconds;
-    let timerInterval = null;
-
-    const timeDisplay = document.getElementById("timeDisplay");
-    const finishBtn = document.getElementById("finishBtn");
-    const progressBar = document.getElementById("progressBar");
-
-    function goToPage(n) {
-      document.getElementById("page1").classList.add("hidden");
-      document.getElementById("page2").classList.add("hidden");
-      document.getElementById("page3").classList.add("hidden");
-      document.getElementById("page" + n).classList.remove("hidden");
-      
-      if (n === 2) {
-        resetTimer();
-      }
-    }
-
-    function formatTime(sec) {
-      const mm = String(Math.floor(sec / 60)).padStart(2, '0');
-      const ss = String(sec % 60).padStart(2, '0');
-      return `${mm}:${ss}`;
-    }
-
-    function updateProgressBar() {
-      const progress = (remaining / totalSeconds) * 100;
-      progressBar.style.width = progress + '%';
-      
-      // Change color based on remaining time
-      if (progress > 50) {
-        progressBar.className = "bg-gradient-to-r from-green-500 to-emerald-500 h-2 rounded-full transition-all duration-1000";
-      } else if (progress > 25) {
-        progressBar.className = "bg-gradient-to-r from-yellow-500 to-orange-500 h-2 rounded-full transition-all duration-1000";
-      } else {
-        progressBar.className = "bg-gradient-to-r from-red-500 to-pink-500 h-2 rounded-full transition-all duration-1000";
-      }
-    }
-
-    function resetTimer() {
-      if (timerInterval) clearInterval(timerInterval);
-      remaining = totalSeconds;
-      timeDisplay.textContent = formatTime(remaining);
-      updateProgressBar();
-      finishBtn.disabled = true;
-      finishBtn.className = "px-8 py-4 bg-gray-200 text-gray-400 rounded-2xl shadow cursor-not-allowed font-semibold text-lg inline-flex items-center";
-    }
-
-    function openSheet(index) {
-      window.open(SHEET_URLS[index], "_blank");
-
-      // Disable all sheet buttons after one is clicked
-      const buttons = document.querySelectorAll(".sheetBtn");
-      buttons.forEach(btn => {
-        btn.disabled = true;
-        btn.className = "px-6 py-4 bg-gray-200 text-gray-400 rounded-2xl shadow cursor-not-allowed font-semibold flex items-center justify-center";
-      });
-
-      // Enable Finish button with professional styling
-      finishBtn.disabled = false;
-      finishBtn.className = "btn-success px-8 py-4 text-white rounded-2xl font-semibold text-lg inline-flex items-center";
-
-      // Start timer if not already running
-      if (!timerInterval) {
-        timerInterval = setInterval(() => {
-          remaining--;
-          timeDisplay.textContent = formatTime(remaining);
-          updateProgressBar();
-          
-          if (remaining <= 0) {
-            clearInterval(timerInterval);
-            showNotification("⏰ Time is up! Your assessment has ended.", "warning");
-            setTimeout(() => goToPage(3), 2000);
-          }
-        }, 1000);
-      }
-    }
-
-    function showNotification(message, type = "info") {
-      const notification = document.createElement("div");
-      notification.className = `fixed top-4 right-4 px-6 py-4 rounded-2xl shadow-lg z-50 font-semibold transform transition-all duration-300 translate-x-full`;
-      
-      if (type === "success") {
-        notification.classList.add("bg-green-500", "text-white");
-      } else if (type === "warning") {
-        notification.classList.add("bg-amber-500", "text-white");
-      } else {
-        notification.classList.add("bg-blue-500", "text-white");
-      }
-      
-      notification.textContent = message;
-      document.body.appendChild(notification);
-      
-      // Animate in
-      setTimeout(() => {
-        notification.classList.remove("translate-x-full");
-      }, 100);
-      
-      // Remove after 3 seconds
-      setTimeout(() => {
-        notification.classList.add("translate-x-full");
-        setTimeout(() => {
-          document.body.removeChild(notification);
-        }, 300);
-      }, 3000);
-    }
-
-    finishBtn.addEventListener("click", () => {
-      if (timerInterval) clearInterval(timerInterval);
-      showNotification("🎉 Assessment completed successfully! Please ensure your sheet is saved.", "success");
-      setTimeout(() => goToPage(3), 1500);
-    });
-
-    // Add page transition effects
-    document.addEventListener("DOMContentLoaded", () => {
-      // Add subtle animations to buttons on hover
-      const buttons = document.querySelectorAll("button");
-      buttons.forEach(btn => {
-        btn.addEventListener("mouseenter", () => {
-          if (!btn.disabled) {
-            btn.style.transform = "translateY(-2px)";
-          }
-        });
-        btn.addEventListener("mouseleave", () => {
-          if (!btn.disabled) {
-            btn.style.transform = "translateY(0)";
-          }
-        });
       });
     });
   </script>

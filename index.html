@@ -1,56 +1,129 @@
-<!-- ============================================================ -->
-<!-- 1. ADD THIS RIGHT AFTER <body> (before animated-background)   -->
-<!-- ============================================================ -->
-
-<div id="login-overlay" class="login-overlay">
-    <div class="login-box">
-        <img src="assests\logo.png" alt="EdWatch Logo" class="login-logo">
-        <h2>Welcome to EdWatch Training</h2>
-        <p class="login-subtitle">Enter your details to begin</p>
-
-        <input type="text" id="login-name" placeholder="Full Name" autocomplete="name">
-        <input type="email" id="login-email" placeholder="Email Address" autocomplete="email">
-
-        <button id="login-submit" class="btn btn-primary login-btn">Continue</button>
-        <p id="login-error" class="login-error"></p>
-    </div>
-</div>
-
-<!-- Small "logged in as" badge, shown after login, in the navbar -->
-<!-- Add this <li> inside your existing <ul class="nav-menu" id="nav-menu"> -->
-<li class="nav-item" id="nav-user-badge" style="display:none;">
-    <span class="nav-link" id="nav-user-name"></span>
-</li>
-
-
-<!-- ============================================================ -->
-<!-- 2. ADD THIS CSS to style.css (or a <style> block)             -->
-<!-- ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EdWatch Training</title>
 <style>
+:root {
+    --ew-bg-deep: #0b1f1d;
+    --ew-bg-mid: #102a27;
+    --ew-sage: #3fae7a;
+    --ew-sage-dark: #2f8d62;
+    --ew-amber: #e8a94c;
+    --ew-slate: #6b7d8a;
+    --ew-card: #faf8f3;
+    --ew-ink: #13241f;
+}
+
+* { box-sizing: border-box; }
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f6f5f1;
+    color: #1c2522;
+}
+
+/* ============================================================ */
+/* LOGIN OVERLAY                                                  */
+/* ============================================================ */
 .login-overlay {
     position: fixed;
     inset: 0;
-    background: rgba(10, 15, 30, 0.92);
+    background: radial-gradient(circle at 30% 20%, var(--ew-bg-mid), var(--ew-bg-deep) 70%);
     backdrop-filter: blur(6px);
     z-index: 9999;
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 .login-overlay.hidden { display: none; }
 
+.login-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.bg-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.35;
+    animation: blobDrift 24s ease-in-out infinite;
+}
+.blob-sage {
+    width: 38vw; height: 38vw;
+    max-width: 420px; max-height: 420px;
+    background: radial-gradient(circle, var(--ew-sage), transparent 70%);
+    top: -10%; left: -8%;
+}
+.blob-amber {
+    width: 30vw; height: 30vw;
+    max-width: 340px; max-height: 340px;
+    background: radial-gradient(circle, var(--ew-amber), transparent 70%);
+    bottom: -12%; right: -6%;
+    animation-duration: 28s;
+    animation-delay: -8s;
+}
+@keyframes blobDrift {
+    0%, 100% { transform: translate(0,0) scale(1); }
+    33% { transform: translate(30px,-24px) scale(1.08); }
+    66% { transform: translate(-24px,18px) scale(0.94); }
+}
+
+.bg-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(circle at center, rgba(0,0,0,0.55), transparent 75%);
+}
+
+.bg-icon {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    opacity: 0.16;
+    animation: iconFloat 10s ease-in-out infinite;
+}
+.icon-leaf   { top: 16%; left: 14%; color: var(--ew-sage); animation-delay: 0s; }
+.icon-chart  { top: 20%; right: 16%; color: var(--ew-amber); animation-delay: -3s; }
+.icon-cap    { bottom: 20%; left: 18%; color: var(--ew-amber); animation-delay: -6s; }
+.icon-target { bottom: 16%; right: 14%; color: var(--ew-sage); animation-delay: -1.5s; }
+
+@keyframes iconFloat {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@media (max-width: 480px) {
+    .bg-icon { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .bg-blob, .bg-icon { animation: none; }
+}
+
 .login-box {
-    background: #ffffff;
+    position: relative;
+    z-index: 1;
+    background: var(--ew-card);
+    border-top: 4px solid var(--ew-sage);
     border-radius: 16px;
     padding: 2.5rem 2rem;
     width: 90%;
     max-width: 380px;
     text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35);
 }
-.login-logo { width: 64px; margin: 0 auto 1rem; display: block; }
-.login-box h2 { margin: 0 0 0.25rem; font-size: 1.4rem; color: #111; }
-.login-subtitle { color: #666; margin-bottom: 1.5rem; font-size: 0.9rem; }
+.login-logo { width: 300px; margin: 0 auto 1rem; display: block; }
+.login-box h2 { margin: 0 0 0.25rem; font-size: 1.4rem; color: #13241f; }
+.login-subtitle { color: #5b6b66; margin-bottom: 1.5rem; font-size: 0.9rem; }
 
 .login-box input {
     width: 100%;
@@ -61,7 +134,7 @@
     font-size: 0.95rem;
     box-sizing: border-box;
 }
-.login-box input:focus { outline: none; border-color: #4f46e5; }
+.login-box input:focus { outline: none; border-color: var(--ew-sage); }
 
 .login-btn {
     width: 100%;
@@ -76,18 +149,391 @@
     min-height: 1.2em;
 }
 
-/* Gate the activities section until login completes */
-.activities-locked { opacity: 0.4; pointer-events: none; filter: blur(2px); }
-</style>
+/* ============================================================ */
+/* SHARED CHROME                                                  */
+/* ============================================================ */
+.btn {
+    display: inline-block;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+}
+.btn-primary { background: var(--ew-sage); color: #fff; }
+.btn-primary:hover { background: var(--ew-sage-dark); }
+.btn-primary:disabled { opacity: 0.6; cursor: default; }
 
+.navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e7e5df;
+    padding: 0.9rem 1.5rem;
+    position: sticky;
+    top: 0;
+    z-index: 30;
+}
+.nav-container {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+.nav-logo { font-weight: 700; color: var(--ew-ink); text-decoration: none; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+.nav-logo .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ew-sage); display: inline-block; }
+
+.nav-menu { list-style: none; display: flex; gap: 0.4rem; margin: 0; padding: 0; align-items: center; }
+.nav-tab {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.92rem;
+    font-family: inherit;
+    color: #5b6b66;
+    padding: 0.5rem 0.9rem;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: background 0.15s, color 0.15s;
+}
+.nav-tab:hover { background: #f1f5f1; color: var(--ew-ink); }
+.nav-tab.active { background: rgba(63,174,122,0.12); color: var(--ew-sage-dark); }
+
+.nav-user { position: relative; }
+.nav-user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: #3a4744;
+    padding: 0.3rem 0.1rem;
+    font-family: inherit;
+}
+.nav-user-trigger:hover { color: #13241f; }
+.nav-user-caret { transition: transform 0.15s ease; }
+.nav-user.open .nav-user-caret { transform: rotate(180deg); }
+
+.nav-user-dropdown {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: #ffffff;
+    border: 1px solid #e7e5df;
+    border-radius: 10px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.14);
+    min-width: 150px;
+    padding: 0.4rem;
+    display: none;
+    z-index: 20;
+}
+.nav-user-dropdown.open { display: block; }
+
+.nav-logout-btn {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0.55rem 0.7rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #b91c1c;
+    font-family: inherit;
+}
+.nav-logout-btn:hover { background: #fdecec; }
+
+.animated-background {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background:
+        radial-gradient(circle at 80% 10%, rgba(63,174,122,0.06), transparent 40%),
+        radial-gradient(circle at 10% 80%, rgba(232,169,76,0.06), transparent 40%);
+}
+
+main { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+.activities-locked { opacity: 0.4; pointer-events: none; filter: blur(2px); }
+
+/* ---- Hero / welcome ---- */
+.hero {
+    background: linear-gradient(135deg, var(--ew-bg-deep), var(--ew-bg-mid));
+    border-radius: 18px;
+    padding: 2rem 2.25rem;
+    color: #fff;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    position: relative;
+    overflow: hidden;
+}
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 85% 20%, rgba(63,174,122,0.35), transparent 55%);
+}
+.hero-text { position: relative; z-index: 1; }
+.hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ew-amber); font-weight: 700; margin-bottom: 0.4rem; }
+.hero h1 { margin: 0 0 0.4rem; font-size: 1.6rem; }
+.hero p { margin: 0; color: rgba(255,255,255,0.75); font-size: 0.92rem; max-width: 460px; }
+.hero-progress {
+    position: relative;
+    z-index: 1;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 14px;
+    padding: 1rem 1.4rem;
+    text-align: center;
+    min-width: 150px;
+}
+.hero-progress .num { font-size: 2rem; font-weight: 800; color: var(--ew-sage); line-height: 1; }
+.hero-progress .label { font-size: 0.75rem; color: rgba(255,255,255,0.65); text-transform: uppercase; letter-spacing: 0.05em; margin-top: 0.3rem; }
+
+/* ---- Activity cards ---- */
+.section-title-row { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.1rem; }
+.section-title-row h2 { font-size: 1.3rem; color: var(--ew-ink); margin: 0; }
+.section-title-row span { font-size: 0.85rem; color: var(--ew-slate); }
+
+.activity-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.1rem;
+}
+.activity-card {
+    background: #fff;
+    border: 1px solid #e7e5df;
+    border-radius: 14px;
+    padding: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    transition: box-shadow 0.18s, transform 0.18s;
+}
+.activity-card:hover { box-shadow: 0 14px 32px rgba(19,36,31,0.08); transform: translateY(-2px); }
+.activity-card .icon-badge {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    background: rgba(63,174,122,0.12);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+}
+.activity-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ew-sage-dark); }
+.activity-card h3 { margin: 0; font-size: 1.05rem; color: var(--ew-ink); }
+.activity-card p.desc { margin: 0; font-size: 0.86rem; color: #5b6b66; line-height: 1.45; flex-grow: 1; }
+.activity-meta { display: flex; align-items: center; justify-content: space-between; font-size: 0.78rem; color: var(--ew-slate); }
+.status-pill {
+    display: inline-flex; align-items: center; gap: 0.3rem;
+    font-size: 0.75rem; font-weight: 600; padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+}
+.status-pill.not-started { background: #f1f0eb; color: #837f73; }
+.status-pill.done { background: rgba(63,174,122,0.14); color: var(--ew-sage-dark); }
+.activity-card a.btn {
+    text-align: center;
+    margin-top: 0.3rem;
+}
+
+/* ---- Leaderboard ---- */
+.leaderboard-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    margin-bottom: 1.1rem;
+}
+.leaderboard-actions { display: flex; gap: 0.6rem; }
+.btn-ghost {
+    background: #fff;
+    border: 1px solid #e7e5df;
+    color: var(--ew-ink);
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+}
+.btn-ghost:hover { background: #f6f5f1; }
+
+.leaderboard-wrap {
+    background: #fff;
+    border: 1px solid #e7e5df;
+    border-radius: 14px;
+    overflow: hidden;
+}
+table.leaderboard { width: 100%; border-collapse: collapse; font-size: 0.86rem; }
+table.leaderboard thead th {
+    background: #f6f5f1;
+    text-align: left;
+    padding: 0.7rem 0.9rem;
+    font-size: 0.74rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--ew-slate);
+    border-bottom: 1px solid #e7e5df;
+    white-space: nowrap;
+}
+table.leaderboard tbody td {
+    padding: 0.7rem 0.9rem;
+    border-bottom: 1px solid #f1f0eb;
+    vertical-align: top;
+}
+table.leaderboard tbody tr:last-child td { border-bottom: none; }
+table.leaderboard tbody tr:hover { background: #fbfaf7; }
+.lb-rank { font-weight: 700; color: var(--ew-sage-dark); width: 2.5rem; }
+.lb-name { font-weight: 600; color: var(--ew-ink); }
+.lb-email { display: block; font-weight: 400; color: var(--ew-slate); font-size: 0.76rem; }
+.lb-total { font-weight: 700; color: var(--ew-ink); }
+.lb-loading { text-align: center; color: var(--ew-slate); padding: 2rem 1rem !important; }
+th.lb-sortable { cursor: pointer; user-select: none; }
+th.lb-sortable:hover { color: var(--ew-ink); }
+
+.hidden-panel { display: none; }
+
+@media (max-width: 640px) {
+    .nav-menu { gap: 0; }
+    .nav-tab { padding: 0.45rem 0.6rem; font-size: 0.85rem; }
+    .hero { padding: 1.5rem; }
+}
+</style>
+</head>
+<body>
 
 <!-- ============================================================ -->
-<!-- 3. ADD THIS SCRIPT before your existing closing </script>     -->
-<!--    (or as a new <script> tag right before </body>)            -->
+<!-- LOGIN OVERLAY                                                  -->
+<!-- ============================================================ -->
+<div id="login-overlay" class="login-overlay">
+    <div class="login-bg" aria-hidden="true">
+        <span class="bg-blob blob-sage"></span>
+        <span class="bg-blob blob-amber"></span>
+        <div class="bg-grid"></div>
+
+        <svg class="bg-icon icon-leaf" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17 1.05.3 1.74.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+        </svg>
+        <svg class="bg-icon icon-chart" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M5 9h3v11H5V9zm6-6h3v17h-3V3zm6 9h3v8h-3v-8z"/>
+        </svg>
+        <svg class="bg-icon icon-cap" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+        </svg>
+        <svg class="bg-icon icon-target" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+        </svg>
+    </div>
+
+    <div class="login-box">
+        <img src="assests/logo.jpg" alt="EdWatch Logo" class="login-logo" onerror="this.style.display='none'">
+        <h2>Welcome to EdWatch Training</h2>
+        <p class="login-subtitle">Enter your details to begin</p>
+
+        <input type="text" id="login-name" placeholder="Full Name" autocomplete="name">
+        <input type="email" id="login-email" placeholder="Email Address" autocomplete="email">
+
+        <button id="login-submit" class="btn btn-primary login-btn">Continue</button>
+        <p id="login-error" class="login-error"></p>
+    </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- APP CHROME                                                     -->
+<!-- ============================================================ -->
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="index.html" class="nav-logo"><span class="dot"></span> EdWatch Training</a>
+        <ul class="nav-menu" id="nav-menu">
+            <li><button class="nav-tab active" id="tab-activities" type="button" onclick="showTab('activities')">My Activities</button></li>
+            <li><button class="nav-tab" id="tab-leaderboard" type="button" onclick="showTab('leaderboard')">Leaderboard</button></li>
+            <li class="nav-item nav-user" id="nav-user-badge" style="display:none;">
+                <button class="nav-user-trigger" id="nav-user-trigger" type="button">
+                    <span id="nav-user-name"></span>
+                    <svg class="nav-user-caret" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M7 10l5 5 5-5z"/>
+                    </svg>
+                </button>
+                <div class="nav-user-dropdown" id="nav-user-dropdown">
+                    <button class="nav-logout-btn" id="nav-logout-btn" type="button">Logout</button>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="animated-background" aria-hidden="true"></div>
+
+<main>
+    <section class="activities">
+
+        <div class="hero">
+            <div class="hero-text">
+                <div class="hero-eyebrow">ESG &amp; Sustainability Training</div>
+                <h1 id="hero-welcome">Welcome to EdWatch Training</h1>
+                <p>Work through each activity below — your score is saved automatically and feeds the live leaderboard.</p>
+            </div>
+            <div class="hero-progress">
+                <div class="num" id="hero-progress-num">0/5</div>
+                <div class="label">Activities Completed</div>
+            </div>
+        </div>
+
+        <!-- ===== Activities panel ===== -->
+        <div id="panel-activities">
+            <div class="section-title-row">
+                <h2>Training Activities</h2>
+                <span>5 activities · ~50 minutes total</span>
+            </div>
+            <div class="activity-grid" id="activity-grid"></div>
+        </div>
+
+        <!-- ===== Leaderboard panel ===== -->
+        <div id="panel-leaderboard" class="hidden-panel">
+            <div class="leaderboard-toolbar">
+                <div class="section-title-row" style="margin-bottom:0;">
+                    <h2>Participant Leaderboard</h2>
+                </div>
+                <div class="leaderboard-actions">
+                    <button class="btn-ghost" id="sort-toggle-btn" onclick="toggleSort()">Sort: <span id="sort-toggle-label">High → Low</span></button>
+                    <button class="btn-ghost" onclick="loadLeaderboard()">↻ Refresh</button>
+                </div>
+            </div>
+            <div class="leaderboard-wrap">
+                <table class="leaderboard">
+                    <thead>
+                        <tr id="leaderboard-head"></tr>
+                    </thead>
+                    <tbody id="leaderboard-body">
+                        <tr><td class="lb-loading" colspan="8">Open this tab to load the leaderboard.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </section>
+</main>
+
+<!-- ============================================================ -->
+<!-- SCRIPT                                                         -->
 <!-- ============================================================ -->
 <script>
-// ---- CONFIG: paste your Apps Script Web App URL here ----
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzPUk8Ft-skhARn3gAwLy3NximnXyXg_Q4O5uCsTLSi5yUE9nR6f5L3ygHSnn_N4sWbkQ/exec'; // ends in /exec
+// ---- CONFIG: paste your Apps Script Web App URL here (must match the one in each activity page) ----
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJ4WSZSJBDwgLdGvY43ygE2hEXlE-1etkOU9GtlqiVfzcH3YdQGWFe2CtBt5013OLLQ/exec'; // ends in /exec
+
+// ---- Activity catalogue: edit file names here if yours differ ----
+const ACTIVITIES = [
+    { key: 'Activity1', file: 'activity1.html', icon: '🌍', title: 'Climate Risk Classification', desc: 'Classify business situations into Physical Risk, Transition Risk, Climate Opportunity or Resilience Action.', duration: '8–10 min', max: 5 },
+    { key: 'Activity2', file: 'activity2.html', icon: '⚡', title: 'Scenario Analysis Boardroom', desc: 'Make strategic investment calls across three climate transition scenarios as the leadership team.', duration: '10–15 min', max: 3 },
+    { key: 'Activity3', file: 'activity3.html', icon: '📘', title: 'IFRS S1 / S2 / TCFD Quiz', desc: 'Match each disclosure requirement to the correct framework — IFRS S1, IFRS S2, TCFD, or a combination.', duration: '8–10 min', max: 12 },
+    { key: 'Activity4', file: 'activity4.html', icon: '🏛️', title: 'Place It in the Right Pillar', desc: 'Drag disclosures into Governance, Strategy, Risk Management or Metrics & Targets.', duration: '10 min', max: 10 },
+    { key: 'Activity5', file: 'activity5.html', icon: '📊', title: 'Financial Statement Analysis', desc: "Spot the green flags and red flags in a bank's financials, then compute the key ratios.", duration: '16 min', max: 9 }
+];
 
 const loginOverlay = document.getElementById('login-overlay');
 const loginNameInput = document.getElementById('login-name');
@@ -96,29 +542,210 @@ const loginSubmitBtn = document.getElementById('login-submit');
 const loginError = document.getElementById('login-error');
 const navUserBadge = document.getElementById('nav-user-badge');
 const navUserName = document.getElementById('nav-user-name');
+const navUserTrigger = document.getElementById('nav-user-trigger');
+const navUserDropdown = document.getElementById('nav-user-dropdown');
+const navLogoutBtn = document.getElementById('nav-logout-btn');
 const activitiesSection = document.querySelector('.activities');
+
+let isSubmitting = false; // guards against double-fire (rapid click + Enter)
+
+function escapeHtml(str) {
+    return String(str ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+async function fetchJSON(action, params = {}) {
+    const qs = new URLSearchParams({ action, ...params }).toString();
+    const res = await fetch(`${APPS_SCRIPT_URL}?${qs}`);
+    return res.json();
+}
+
+/* ---------------- Activity cards ---------------- */
+
+function renderActivityCards() {
+    const grid = document.getElementById('activity-grid');
+    grid.innerHTML = ACTIVITIES.map((a, i) => `
+        <div class="activity-card" data-activity="${a.key}">
+            <div class="icon-badge">${a.icon}</div>
+            <div class="activity-eyebrow">Activity ${i + 1}</div>
+            <h3>${escapeHtml(a.title)}</h3>
+            <p class="desc">${escapeHtml(a.desc)}</p>
+            <div class="activity-meta">
+                <span>⏱ ${a.duration}</span>
+                <span class="status-pill not-started" id="status-${a.key}">Not started</span>
+            </div>
+            <a class="btn btn-primary" id="cta-${a.key}" href="${a.file}">Start Activity</a>
+        </div>
+    `).join('');
+}
+
+function applyProgress(scores) {
+    let completed = 0;
+    ACTIVITIES.forEach(a => {
+        const raw = (scores && scores[a.key]) ? String(scores[a.key]).trim() : '';
+        const pill = document.getElementById(`status-${a.key}`);
+        const cta = document.getElementById(`cta-${a.key}`);
+        if (!pill || !cta) return;
+        if (raw) {
+            completed++;
+            pill.textContent = `Completed · ${raw}`;
+            pill.classList.remove('not-started');
+            pill.classList.add('done');
+            cta.textContent = 'Retry Activity';
+        } else {
+            pill.textContent = 'Not started';
+            pill.classList.add('not-started');
+            pill.classList.remove('done');
+            cta.textContent = 'Start Activity';
+        }
+    });
+    document.getElementById('hero-progress-num').textContent = `${completed}/${ACTIVITIES.length}`;
+}
+
+async function loadUserProgress(email) {
+    if (!email) return;
+    try {
+        const data = await fetchJSON('getScores', { email });
+        if (data && data.success) applyProgress(data.scores || {});
+    } catch (err) {
+        console.warn('EdWatch: could not load progress', err);
+    }
+}
+
+/* ---------------- Leaderboard ---------------- */
+
+let leaderboardData = [];
+let leaderboardKeys = [];
+let leaderboardLoaded = false;
+let sortDesc = true;
+
+function activityLabel(key) {
+    const known = ACTIVITIES.find(a => a.key === key);
+    if (known) return known.title;
+    const num = key.replace(/\D/g, '');
+    return `Activity ${num}`;
+}
+
+function renderLeaderboardHead() {
+    const head = document.getElementById('leaderboard-head');
+    const keys = leaderboardKeys.length ? leaderboardKeys : ACTIVITIES.map(a => a.key);
+    head.innerHTML = `
+        <th>#</th>
+        <th>Participant</th>
+        ${keys.map((key, i) => `<th title="${escapeHtml(activityLabel(key))}">A${i + 1}</th>`).join('')}
+        <th class="lb-sortable" onclick="toggleSort()">Total ⇅</th>
+    `;
+}
+
+function renderLeaderboard() {
+    const tbody = document.getElementById('leaderboard-body');
+    const keys = leaderboardKeys.length ? leaderboardKeys : ACTIVITIES.map(a => a.key);
+    const colCount = keys.length + 3;
+    if (!leaderboardData.length) {
+        tbody.innerHTML = `<tr><td class="lb-loading" colspan="${colCount}">No attempts recorded yet.</td></tr>`;
+        return;
+    }
+    const sorted = [...leaderboardData].sort((a, b) => sortDesc ? b.totalScore - a.totalScore : a.totalScore - b.totalScore);
+    tbody.innerHTML = sorted.map((row, i) => `
+        <tr>
+            <td class="lb-rank">${i + 1}</td>
+            <td class="lb-name">${escapeHtml(row.name || '—')}<span class="lb-email">${escapeHtml(row.email || '')}</span></td>
+            ${keys.map(key => `<td>${escapeHtml((row.activities && row.activities[key]) || '—')}</td>`).join('')}
+            <td class="lb-total">${row.totalScore}${row.totalPossible ? '/' + row.totalPossible : ''}</td>
+        </tr>
+    `).join('');
+}
+
+async function loadLeaderboard() {
+    const tbody = document.getElementById('leaderboard-body');
+    const colCount = (leaderboardKeys.length || ACTIVITIES.length) + 3;
+    tbody.innerHTML = `<tr><td class="lb-loading" colspan="${colCount}">Loading leaderboard…</td></tr>`;
+    try {
+        const data = await fetchJSON('getLeaderboard');
+        if (data && data.success) {
+            leaderboardData = data.leaderboard || [];
+            leaderboardKeys = data.activityKeys && data.activityKeys.length ? data.activityKeys : ACTIVITIES.map(a => a.key);
+            leaderboardLoaded = true;
+            renderLeaderboardHead();
+            renderLeaderboard();
+        } else {
+            tbody.innerHTML = `<tr><td class="lb-loading" colspan="${colCount}">${escapeHtml(data && data.error ? data.error : 'Could not load leaderboard.')}</td></tr>`;
+        }
+    } catch (err) {
+        tbody.innerHTML = `<tr><td class="lb-loading" colspan="${colCount}">Could not connect. Check your internet connection.</td></tr>`;
+    }
+}
+
+function toggleSort() {
+    sortDesc = !sortDesc;
+    document.getElementById('sort-toggle-label').textContent = sortDesc ? 'High → Low' : 'Low → High';
+    renderLeaderboard();
+}
+
+/* ---------------- Tabs ---------------- */
+
+function showTab(tab) {
+    document.getElementById('tab-activities').classList.toggle('active', tab === 'activities');
+    document.getElementById('tab-leaderboard').classList.toggle('active', tab === 'leaderboard');
+    document.getElementById('panel-activities').classList.toggle('hidden-panel', tab !== 'activities');
+    document.getElementById('panel-leaderboard').classList.toggle('hidden-panel', tab !== 'leaderboard');
+    if (tab === 'leaderboard' && !leaderboardLoaded) loadLeaderboard();
+}
+
+/* ---------------- Login / session ---------------- */
 
 function showLoggedInState(name, email) {
     loginOverlay.classList.add('hidden');
     activitiesSection.classList.remove('activities-locked');
     navUserBadge.style.display = 'inline-block';
     navUserName.textContent = '👤 ' + name;
+    document.getElementById('hero-welcome').textContent = `Welcome back, ${name.split(' ')[0]}`;
+    loadUserProgress(email);
 }
 
-// On page load: check if user already has a session
+function logout() {
+    localStorage.removeItem('edwatch_name');
+    localStorage.removeItem('edwatch_email');
+    navUserDropdown.classList.remove('open');
+    navUserBadge.style.display = 'none';
+    activitiesSection.classList.add('activities-locked');
+    loginOverlay.classList.remove('hidden');
+    loginNameInput.value = '';
+    loginEmailInput.value = '';
+    loginError.textContent = '';
+}
+
+navUserTrigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    document.getElementById('nav-user-badge').classList.toggle('open');
+    navUserDropdown.classList.toggle('open');
+});
+
+document.addEventListener('click', () => {
+    navUserDropdown.classList.remove('open');
+    document.getElementById('nav-user-badge').classList.remove('open');
+});
+
+navLogoutBtn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    logout();
+});
+
 window.addEventListener('DOMContentLoaded', () => {
+    renderActivityCards();
+    renderLeaderboardHead();
     activitiesSection.classList.add('activities-locked');
 
     const savedName = localStorage.getItem('edwatch_name');
     const savedEmail = localStorage.getItem('edwatch_email');
 
     if (savedName && savedEmail) {
-        // Already logged in this browser — skip the form
         showLoggedInState(savedName, savedEmail);
     }
 });
 
 loginSubmitBtn.addEventListener('click', async () => {
+    if (isSubmitting) return;
+
     const name = loginNameInput.value.trim();
     const email = loginEmailInput.value.trim();
 
@@ -132,6 +759,7 @@ loginSubmitBtn.addEventListener('click', async () => {
         return;
     }
 
+    isSubmitting = true;
     loginSubmitBtn.disabled = true;
     loginSubmitBtn.textContent = 'Logging in...';
     loginError.textContent = '';
@@ -151,13 +779,16 @@ loginSubmitBtn.addEventListener('click', async () => {
     } catch (err) {
         loginError.textContent = 'Could not connect. Check your internet connection.';
     } finally {
+        isSubmitting = false;
         loginSubmitBtn.disabled = false;
         loginSubmitBtn.textContent = 'Continue';
     }
 });
 
-// Allow pressing Enter in the email field to submit
 loginEmailInput.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') loginSubmitBtn.click();
 });
 </script>
+
+</body>
+</html>

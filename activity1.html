@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Module 1 - EdWatch Professional</title>
+  <title>Activity 1 - EdWatch Professional</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
@@ -477,6 +477,22 @@
 
   <!-- Enhanced JavaScript -->
   <script>
+    // ---- EdWatch score sync: paste APPS_SCRIPT_URL to match your login page ----
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJ4WSZSJBDwgLdGvY43ygE2hEXlE-1etkOU9GtlqiVfzcH3YdQGWFe2CtBt5013OLLQ/exec';
+    async function saveScoreToSheet(activityKey, score, total) {
+      try {
+        const email = localStorage.getItem('edwatch_email');
+        if (!email) return;
+        // Combine into one "score/total" string since the backend's saveScore()
+        // takes a single score value (no separate total param).
+        const value = total ? `${score}/${total}` : `${score}`;
+        const url = `${APPS_SCRIPT_URL}?action=saveScore&email=${encodeURIComponent(email)}&activity=${encodeURIComponent(activityKey)}&score=${encodeURIComponent(value)}`;
+        await fetch(url);
+      } catch (err) {
+        console.warn('EdWatch: could not save score', err);
+      }
+    }
+
     // Climate Risk Classification data
     const correctAnswers = {
       "1": "Resilience Action",
@@ -613,6 +629,9 @@
       
       const timeMessage = `\nCompleted in ${Math.floor(totalTime/60)}:${(totalTime%60).toString().padStart(2, '0')}`;
       document.getElementById("performance-message").textContent = message + timeMessage;
+
+      // Save score to the EdWatch tracking sheet
+      saveScoreToSheet('Activity1', classificationScore, totalPossible);
 
       goToPage("results");
 

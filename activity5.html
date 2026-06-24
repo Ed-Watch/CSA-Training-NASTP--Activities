@@ -1,735 +1,413 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Climate Activities 1 & 2 – ed-watch</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity 5 - Financial Statement Analysis</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
-    * { font-family: 'Inter', sans-serif; box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-    /* Deep teal-to-slate animated background */
-    .animated-bg {
-      background: linear-gradient(-45deg, #0f4c5c, #1a3a4a, #0d6e6e, #1c3f5e);
-      background-size: 400% 400%;
-      animation: gradientShift 14s ease infinite;
-    }
-    @keyframes gradientShift {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
+  body {
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 40px 16px;
+    color: #1f2937;
+  }
 
-    /* Floating leaf/wave shapes */
-    .floating-shape {
-      position: absolute;
-      opacity: 0.07;
-      animation: floatAnim 10s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @keyframes floatAnim {
-      0%, 100% { transform: translateY(0px) rotate(0deg); }
-      50% { transform: translateY(-28px) rotate(15deg); }
-    }
+  .container { max-width: 900px; margin: 0 auto; }
 
-    .glass {
-      background: rgba(255,255,255,0.97);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.4);
-    }
+  .box {
+    background: rgba(255, 255, 255, 0.97);
+    border-radius: 20px;
+    padding: 30px;
+    margin-bottom: 24px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  }
 
-    .card-entrance {
-      animation: slideUp 0.5s ease-out;
-    }
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(24px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
+  #intro {
+    text-align: center;
+    border-radius: 24px;
+    padding: 48px 32px;
+  }
 
-    /* Primary CTA */
-    .btn-primary {
-      background: linear-gradient(135deg, #0d9488, #0891b2);
-      transition: all 0.25s ease;
-    }
-    .btn-primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(13,148,136,0.4);
-    }
+  h1 { font-size: 1.6rem; margin: 0 0 6px; color: #111827; }
+  h2 { font-size: 1.4rem; margin: 0 0 16px; color: #111827; }
 
-    .btn-secondary {
-      background: linear-gradient(135deg, #6366f1, #8b5cf6);
-      transition: all 0.25s ease;
-    }
-    .btn-secondary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(99,102,241,0.35);
-    }
+  .section-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin: 4px 0 14px;
+  }
 
-    .btn-success {
-      background: linear-gradient(135deg, #10b981, #059669);
-      transition: all 0.25s ease;
-    }
-    .btn-success:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 28px rgba(16,185,129,0.35);
-    }
+  .question-group {
+    background: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 18px 20px;
+    margin-bottom: 16px;
+  }
 
-    /* Option buttons */
-    .option-btn {
-      border: 2px solid #e5e7eb;
-      background: #f9fafb;
-      transition: all 0.18s ease;
-      cursor: pointer;
-      border-radius: 10px;
-      padding: 10px 16px;
-      text-align: left;
-      width: 100%;
-    }
-    .option-btn:hover:not(:disabled) {
-      border-color: #0d9488;
-      background: #f0fdfa;
-      transform: translateX(4px);
-    }
-    .option-btn.correct {
-      border-color: #10b981;
-      background: #d1fae5;
-    }
-    .option-btn.wrong {
-      border-color: #ef4444;
-      background: #fee2e2;
-    }
-    .option-btn:disabled { cursor: default; }
+  .question-group label {
+    display: block;
+    margin: 10px 0;
+    line-height: 1.55;
+    cursor: pointer;
+    font-size: 0.95rem;
+  }
 
-    /* Progress dots */
-    .dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      background: #d1d5db;
-      transition: background 0.3s;
-    }
-    .dot.active  { background: #0d9488; }
-    .dot.done    { background: #10b981; }
-    .dot.wrong-dot { background: #ef4444; }
+  .question-group input[type="checkbox"],
+  .question-group input[type="radio"] {
+    margin-right: 10px;
+    transform: scale(1.15);
+    vertical-align: middle;
+  }
 
-    /* Score badge */
-    .score-ring {
-      width: 96px; height: 96px;
-      border-radius: 50%;
-      border: 6px solid #10b981;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.75rem; font-weight: 800;
-      color: #065f46;
-    }
+  pre {
+    background: #0f172a;
+    color: #e2e8f0;
+    padding: 20px;
+    border-radius: 12px;
+    overflow-x: auto;
+    font-size: 0.85rem;
+    line-height: 1.7;
+  }
 
-    /* Classification chip */
-    .chip {
-      display: inline-block;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 600;
-      cursor: pointer;
-      border: 2px solid transparent;
-      transition: all 0.18s;
-    }
-    .chip:hover:not(.chip-selected):not(.chip-disabled) {
-      opacity: 0.8;
-    }
+  button {
+    background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+    padding: 14px 28px;
+  }
 
-    /* Activity selector tabs */
-    .tab-btn {
-      transition: all 0.2s;
-      border-bottom: 3px solid transparent;
-      padding: 8px 18px;
-      font-weight: 600;
-      font-size: 0.875rem;
-      color: #6b7280;
-      cursor: pointer;
-    }
-    .tab-btn.active {
-      border-bottom-color: #0d9488;
-      color: #0d9488;
-    }
-    .tab-btn:hover:not(.active) {
-      color: #374151;
-    }
+  button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -8px rgba(59, 130, 246, 0.5);
+  }
 
-    /* Timer pulse */
-    .timer-warn { animation: pulseWarn 0.9s ease-in-out infinite; }
-    @keyframes pulseWarn {
-      0%,100% { opacity: 1; }
-      50%      { opacity: 0.55; }
-    }
-
-    /* Feedback ribbon */
-    .feedback-correct {
-      background: #d1fae5; border: 1px solid #6ee7b7; color: #065f46;
-      border-radius: 8px; padding: 10px 14px;
-    }
-    .feedback-wrong {
-      background: #fee2e2; border: 1px solid #fca5a5; color: #991b1b;
-      border-radius: 8px; padding: 10px 14px;
-    }
-
-    /* Classify game */
-    .classify-item {
-      background: #f1f5f9;
-      border: 2px solid #e2e8f0;
-      border-radius: 10px;
-      padding: 10px 14px;
-      transition: all 0.2s;
-    }
-    .classify-item.answered { border-color: #a7f3d0; background: #ecfdf5; }
-    .classify-item.answered-wrong { border-color: #fca5a5; background: #fff1f2; }
-
-    /* Scrollable on small screens */
-    .scroll-container {
-      max-height: calc(100vh - 4rem);
-      overflow-y: auto;
-    }
-
-    @media (max-width: 640px) {
-      .scroll-container { max-height: calc(100vh - 1rem); }
-    }
-
-    .hidden { display: none !important; }
-  </style>
+  #timer {
+    background: linear-gradient(135deg, #ef4444, #dc2626);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-weight: 700;
+    display: inline-block;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+  }
+</style>
 </head>
-<body class="animated-bg min-h-screen flex justify-center items-start p-2 sm:p-4 md:p-6 relative overflow-hidden">
+<body>
+  <div class="container">
 
-  <!-- Decorative blobs -->
-  <div class="floating-shape" style="width:120px;height:120px;background:#fff;border-radius:60% 40% 70% 30%;top:8%;left:6%;animation-delay:0s;"></div>
-  <div class="floating-shape" style="width:80px;height:80px;background:#fff;border-radius:30% 70% 40% 60%;top:15%;right:8%;animation-delay:3s;"></div>
-  <div class="floating-shape" style="width:100px;height:100px;background:#fff;border-radius:50%;bottom:12%;left:10%;animation-delay:5s;"></div>
-  <div class="floating-shape" style="width:60px;height:60px;background:#fff;bottom:20%;right:12%;animation-delay:7s;"></div>
+    <!-- Intro Page -->
+    <div id="intro" class="box">
+      <div style="font-size: 3rem; margin-bottom: 10px;">📊</div>
+      <h1>Activity 5: Financial Statement Analysis Challenge</h1>
+      <div style="font-size: 1.2rem; color: #6b7280; margin: 20px 0;">⏱️ Duration: 16 Minutes</div>
 
-  <!-- ===== HOME ===== -->
-  <div id="page-home" class="w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
-    <div class="p-5 sm:p-8 md:p-10">
-      <div class="text-center mb-6">
-        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-teal-600 bg-teal-50 px-3 py-1 rounded-full mb-3">ed-watch Training</span>
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 leading-tight mb-2">
-          Climate Scenario Analysis
-        </h1>
-        <p class="text-gray-500 text-sm sm:text-base">Interactive activities for sustainability reporting professionals</p>
-      </div>
+      <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(55, 48, 163, 0.05)); padding: 25px; border-radius: 15px; margin: 30px 0;">
+        <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>🎯 Objective:</strong> Analyze a comprehensive financial snapshot, identify key performance indicators, compute essential ratios, and demonstrate analytical proficiency.</p>
 
-      <div class="grid gap-4 sm:grid-cols-2 mt-8">
-        <!-- Activity 1 card -->
-        <div class="rounded-2xl border-2 border-teal-100 bg-gradient-to-br from-teal-50 to-cyan-50 p-5">
-          <div class="text-2xl mb-2">🌍</div>
-          <div class="text-xs font-bold text-teal-600 uppercase tracking-wider mb-1">Activity 1</div>
-          <h2 class="text-lg font-bold text-gray-800 mb-1">"Choose the Scenario" Challenge</h2>
-          <p class="text-sm text-gray-600 mb-4">Match real-world situations to NGFS / IPCC climate scenarios. 5 questions, instant feedback.</p>
-          <div class="flex gap-2 text-xs text-gray-500">
-            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">⏱ 5–7 min</span>
-            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">5 questions</span>
-          </div>
-          <button onclick="startActivity1()" class="btn-primary text-white w-full mt-4 py-2.5 rounded-xl font-bold text-sm">
-            Start Activity 1 →
-          </button>
-        </div>
-
-        <!-- Activity 2 card -->
-        <div class="rounded-2xl border-2 border-indigo-100 bg-gradient-to-br from-indigo-50 to-violet-50 p-5">
-          <div class="text-2xl mb-2">⚡</div>
-          <div class="text-xs font-bold text-indigo-600 uppercase tracking-wider mb-1">Activity 2</div>
-          <h2 class="text-lg font-bold text-gray-800 mb-1">"Risk or Data Source?" Rapid Classification</h2>
-          <p class="text-sm text-gray-600 mb-4">Classify climate risks and data sources into the correct categories. Two fast rounds.</p>
-          <div class="flex gap-2 text-xs text-gray-500">
-            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">⏱ 5–8 min</span>
-            <span class="bg-white border border-gray-200 rounded-full px-2 py-0.5">2 rounds</span>
-          </div>
-          <button onclick="startActivity2()" class="btn-secondary text-white w-full mt-4 py-2.5 rounded-xl font-bold text-sm">
-            Start Activity 2 →
-          </button>
-        </div>
-      </div>
-
-      <p class="text-center text-xs text-gray-400 mt-6">Trainer: Sana Quadri &nbsp;|&nbsp; Karachi, June 2026</p>
-    </div>
-  </div>
-
-  <!-- ===== ACTIVITY 1: INSTRUCTIONS ===== -->
-  <div id="page-a1-intro" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
-    <div class="p-5 sm:p-8 md:p-10">
-      <div class="text-center mb-6">
-        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-teal-600 bg-teal-50 px-3 py-1 rounded-full mb-3">Activity 1</span>
-        <div class="text-4xl mb-2">🌍</div>
-        <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-2">"Choose the Scenario" Challenge</h1>
-        <p class="text-gray-500 text-sm">Test your understanding of NGFS and IPCC climate scenarios.</p>
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2 mb-6">
-        <div class="bg-teal-50 border border-teal-200 rounded-xl p-4">
-          <div class="font-bold text-teal-800 mb-1 text-sm">🎯 Objective</div>
-          <p class="text-sm text-gray-700">Match each real-world policy situation to the correct climate scenario (NGFS / IPCC).</p>
-        </div>
-        <div class="bg-cyan-50 border border-cyan-200 rounded-xl p-4">
-          <div class="font-bold text-cyan-800 mb-1 text-sm">📋 Format</div>
-          <ul class="text-sm text-gray-700 space-y-1">
-            <li>• 5 multiple-choice questions</li>
-            <li>• Instant feedback after each answer</li>
-            <li>• Debrief discussion at the end</li>
+        <div style="text-align: left; max-width: 700px; margin: 0 auto;">
+          <p style="font-weight: 600; color: #1e40af; margin-bottom: 15px;">📋 Assessment Components:</p>
+          <ul style="list-style: none; padding: 0;">
+            <li style="margin: 12px 0; padding: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+              <strong>Part A:</strong> Identify 3 positive signals and 3 red flags from financial data
+            </li>
+            <li style="margin: 12px 0; padding: 10px; background: white; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+              <strong>Part B:</strong> Calculate key financial ratios for comparative analysis
+            </li>
           </ul>
         </div>
-      </div>
-      <div class="flex gap-3 justify-center flex-wrap">
-        <button onclick="goHome()" class="border-2 border-gray-300 text-gray-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition">← Home</button>
-        <button onclick="beginA1()" class="btn-primary text-white px-8 py-2.5 rounded-xl font-bold text-sm">Start →</button>
-      </div>
-    </div>
-  </div>
 
-  <!-- ===== ACTIVITY 1: QUESTION ===== -->
-  <div id="page-a1-q" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
-    <div class="p-5 sm:p-7 md:p-9">
-      <!-- Header -->
-      <div class="flex items-center justify-between mb-5">
-        <span class="text-xs font-bold text-teal-600 uppercase tracking-wider">Activity 1</span>
-        <div class="flex gap-1.5" id="a1-dots"></div>
-      </div>
-
-      <!-- Progress bar -->
-      <div class="w-full h-1.5 bg-gray-100 rounded-full mb-6 overflow-hidden">
-        <div id="a1-progress" class="h-full bg-teal-500 rounded-full transition-all duration-500" style="width:0%"></div>
-      </div>
-
-      <div class="mb-1">
-        <span class="text-xs font-semibold text-gray-400" id="a1-q-label">Question 1 of 5</span>
-      </div>
-      <p class="text-base sm:text-lg font-semibold text-gray-800 mb-4 leading-snug" id="a1-q-text"></p>
-
-      <div class="grid gap-2 mb-4" id="a1-options"></div>
-      <div id="a1-feedback" class="hidden mb-4 text-sm font-medium"></div>
-      <button id="a1-next-btn" class="hidden btn-primary text-white w-full py-2.5 rounded-xl font-bold text-sm" onclick="a1Next()">Next Question →</button>
-    </div>
-  </div>
-
-  <!-- ===== ACTIVITY 1: RESULTS ===== -->
-  <div id="page-a1-end" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
-    <div class="p-5 sm:p-8 md:p-10 text-center">
-      <div class="text-4xl mb-3">🎯</div>
-      <h2 class="text-2xl font-black text-gray-900 mb-1">Activity 1 Complete!</h2>
-      <p class="text-gray-500 text-sm mb-6">Your scenario identification results</p>
-      <div class="flex justify-center mb-6">
-        <div class="score-ring" id="a1-score-display">—</div>
-      </div>
-      <div id="a1-score-label" class="text-base font-semibold text-gray-700 mb-6"></div>
-
-      <!-- Debrief -->
-      <div class="bg-amber-50 border border-amber-200 rounded-xl p-4 mb-6 text-left">
-        <div class="font-bold text-amber-800 mb-2 text-sm">💬 Debrief Discussion</div>
-        <ul class="text-sm text-gray-700 space-y-1">
-          <li>• Why do <strong>Delayed Transition</strong> scenarios carry the <em>highest transition risk</em>? (sudden policy shock)</li>
-          <li>• Why does <strong>Hot House World</strong> carry the <em>highest physical risk</em>? (unmitigated warming)</li>
-          <li>• Where does <strong>Net Zero 2050</strong> sit in the risk trade-off?</li>
-        </ul>
-      </div>
-
-      <div class="flex gap-3 justify-center flex-wrap">
-        <button onclick="retryA1()" class="border-2 border-teal-500 text-teal-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-teal-50 transition">↺ Retry</button>
-        <button onclick="startActivity2()" class="btn-secondary text-white px-8 py-2.5 rounded-xl font-bold text-sm">Activity 2 →</button>
-        <button onclick="goHome()" class="border-2 border-gray-300 text-gray-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition">🏠 Home</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== ACTIVITY 2: INSTRUCTIONS ===== -->
-  <div id="page-a2-intro" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
-    <div class="p-5 sm:p-8 md:p-10">
-      <div class="text-center mb-6">
-        <span class="inline-block text-xs font-semibold tracking-widest uppercase text-indigo-600 bg-indigo-50 px-3 py-1 rounded-full mb-3">Activity 2</span>
-        <div class="text-4xl mb-2">⚡</div>
-        <h1 class="text-2xl sm:text-3xl font-black text-gray-900 mb-2">"Risk or Data Source?" Rapid Classification</h1>
-        <p class="text-gray-500 text-sm">Classify climate risks and data sources correctly.</p>
-      </div>
-      <div class="grid gap-4 sm:grid-cols-2 mb-6">
-        <div class="bg-indigo-50 border border-indigo-200 rounded-xl p-4">
-          <div class="font-bold text-indigo-800 mb-1 text-sm">🎯 Objective</div>
-          <p class="text-sm text-gray-700">Test understanding of climate risk types and practical data source identification.</p>
-        </div>
-        <div class="bg-violet-50 border border-violet-200 rounded-xl p-4">
-          <div class="font-bold text-violet-800 mb-1 text-sm">📋 Format</div>
-          <ul class="text-sm text-gray-700 space-y-1">
-            <li>• Round 1: Risk Classification (4 items)</li>
-            <li>• Round 2: Data Source Classification (4 items)</li>
-            <li>• Tap each item's correct category</li>
-          </ul>
+        <div style="background: rgba(220, 38, 38, 0.1); border: 2px solid rgba(220, 38, 38, 0.2); padding: 20px; border-radius: 12px; margin-top: 25px;">
+          <p style="font-weight: 600; color: #dc2626; margin-bottom: 10px;">📊 Scoring Framework:</p>
+          <p style="color: #7f1d1d;">• Signal Identification: +1 point per accurate selection (Maximum: 6 points)</p>
+          <p style="color: #7f1d1d;">• Ratio Calculations: +1 point per correct computation (Maximum: 3 points)</p>
+          <p style="color: #7f1d1d; font-weight: 600;">Total Possible Score: 9 points</p>
         </div>
       </div>
-      <div class="flex gap-3 justify-center flex-wrap">
-        <button onclick="goHome()" class="border-2 border-gray-300 text-gray-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-gray-50 transition">← Home</button>
-        <button onclick="beginA2()" class="btn-secondary text-white px-8 py-2.5 rounded-xl font-bold text-sm">Start →</button>
+
+      <button onclick="startActivity()" style="font-size: 1.2rem; padding: 20px 40px; margin-top: 30px;">
+        🚀 Begin Financial Analysis
+      </button>
+    </div>
+
+    <!-- Activity Page -->
+    <div id="activity" style="display:none;">
+      <div id="timer">⏳ Time Remaining: 16:00</div>
+
+      <!-- Handout -->
+      <div class="box">
+        <h2>📊 Financial Data Sheet</h2>
+        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.05), rgba(55, 48, 163, 0.02)); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+          <p style="font-weight: 600; color: #1e40af; text-align: center; margin-bottom: 15px;">Amounts in PKR Million</p>
+        </div>
+        <pre>
+<strong>BALANCE SHEET METRICS</strong>
+─────────────────────────────────
+Avg Assets:           Y1: 475,000  │  Y2: 537,500
+Avg Equity:           Y1:  36,000  │  Y2:  43,500
+Deposits:             Y1: 360,000  │  Y2: 420,000
+  └─ CASA Ratio:      Y1:     52%  │  Y2:     48%
+Gross Loans:          Y1: 320,000  │  Y2: 370,000
+
+<strong>INCOME STATEMENT</strong>
+─────────────────────────────────
+Net Interest Income:  Y1:  13,000  │  Y2:  16,500
+Non-Interest Income:  Y1:   3,200  │  Y2:   3,800
+Operating Expenses:   Y1:   9,200  │  Y2:  11,800
+Provisions:           Y1:   1,800  │  Y2:   2,600
+Net Income:           Y1:   4,500  │  Y2:   5,200
+
+<strong>ASSET QUALITY</strong>
+─────────────────────────────────
+NPL Ratio:            Y1:    6.0%  │  Y2:    6.8%
+Coverage Ratio:       Y1:     78%  │  Y2:     74%
+        </pre>
+      </div>
+
+      <!-- Part A -->
+      <div class="box">
+        <p class="section-title">Part A: Strategic Signal Analysis</p>
+        
+        <div style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(16, 185, 129, 0.05)); padding: 20px; border-radius: 15px; margin: 20px 0; border: 2px solid rgba(5, 150, 105, 0.2);">
+          <strong style="color: #059669; font-size: 1.2rem;">✅ Positive Performance Indicators (Select 3):</strong>
+        </div>
+        
+        <div class="question-group">
+          <label><input type="checkbox" name="positives" value="casa"> <strong>CASA Optimization Strategy:</strong> Rebuild CASA through salary-account bundles, merchant QR/payroll tie-ups, and digital onboarding drives in high-traffic branches.</label>
+          <label><input type="checkbox" name="positives" value="momentum"> <strong>Revenue Growth Momentum:</strong> NII up ~27% (13,000→16,500) and non-interest income up ~19% (3,200→3,800). NIM proxy improved ~2.74% → ~3.07%.</label>
+          <label><input type="checkbox" name="positives" value="liquidity"> <strong>Balanced Growth Profile:</strong> Deposits +16.7% and loans +15.6%; LDR ~88–89%, demonstrating funding stability.</label>
+          <label><input type="checkbox" name="positives" value="profit"> <strong>Profitability Enhancement:</strong> Net income +15.6%; ROAA ~0.95% → ~0.97%.</label>
+          <label><input type="checkbox" name="positives" value="fees"> <strong>Fee Income Diversification:</strong> Lift fees without balance-sheet risk through cross-sell payments/FX and tiered cash-management packages.</label>
+          <label><input type="checkbox" name="positives" value="repricing"> <strong>Strategic Repricing Initiative:</strong> Data-led repricing of lower-CASA and term funding hedges.</label>
+          <label><input type="checkbox" name="positives" value="provisioning"> <strong>Proactive Risk Management:</strong> Provisioning coverage guardrail with proactive Stage-2/3 top-ups and monthly ECL sensitivity monitoring.</label>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(220, 38, 38, 0.1), rgba(239, 68, 68, 0.05)); padding: 20px; border-radius: 15px; margin: 20px 0; border: 2px solid rgba(220, 38, 38, 0.2);">
+          <strong style="color: #dc2626; font-size: 1.2rem;">🚩 Risk Factors & Concerns (Select 3):</strong>
+        </div>
+        
+        <div class="question-group">
+          <label><input type="checkbox" name="redflags" value="credit"> <strong>Credit Risk Tightening:</strong> Recalibrate scorecards/limits on riskier buckets, step-up collections, add cures and vintage monitoring.</label>
+          <label><input type="checkbox" name="redflags" value="assetquality"> <strong>Asset Quality Deterioration:</strong> NPL 6.0% → 6.8% and coverage 78% → 74%; credit cost up 0.56% → 0.70%.</label>
+          <label><input type="checkbox" name="redflags" value="funding"> <strong>Funding Mix Pressure:</strong> CASA ratio declined 52% → 48%, implying higher cost of funds.</label>
+          <label><input type="checkbox" name="redflags" value="efficiency"> <strong>Operational Efficiency Decline:</strong> Cost-to-income 56.8% → 58.2%; OPEX growth (28%) outpacing revenue (25%).</label>
+          <label><input type="checkbox" name="redflags" value="roe"> <strong>Return Metrics Softening:</strong> ROE declined 12.5% → 12.0% due to higher equity base.</label>
+          <label><input type="checkbox" name="redflags" value="costs"> <strong>Cost Management Imperative:</strong> Need for 90-day ZBB, automation, and unit-cost KPIs.</label>
+        </div>
+      </div>
+
+      <!-- Part B -->
+      <div class="box">
+        <p class="section-title">Part B: Financial Ratio Computation</p>
+        
+        <div class="question-group">
+          <p><strong>1. Cost-to-Income Ratio (Y1 & Y2):</strong></p>
+          <label><input type="radio" name="cti" value="Y1=56.8% | Y2=58.1%"> Y1 = 56.8% | Y2 = 58.1%</label>
+          <label><input type="radio" name="cti" value="Y1=26.9% | Y2=28.3%"> Y1 = 26.9% | Y2 = 28.3%</label>
+          <label><input type="radio" name="cti" value="Y1=36.8% | Y2=53.1%"> Y1 = 36.8% | Y2 = 53.1%</label>
+          <label><input type="radio" name="cti" value="Y1=41.8% | Y2=44.1%"> Y1 = 41.8% | Y2 = 44.1%</label>
+        </div>
+
+        <div class="question-group">
+          <p><strong>2. Return on Assets - ROA (Y1 & Y2):</strong></p>
+          <label><input type="radio" name="roa" value="Y1=1.25% | Y2=1.07%"> Y1 = 1.25% | Y2 = 1.07%</label>
+          <label><input type="radio" name="roa" value="Y1=0.25% | Y2=0.27%"> Y1 = 0.25% | Y2 = 0.27%</label>
+          <label><input type="radio" name="roa" value="Y1=2.15% | Y2=2.17%"> Y1 = 2.15% | Y2 = 2.17%</label>
+          <label><input type="radio" name="roa" value="Y1=0.95% | Y2=0.97%"> Y1 = 0.95% | Y2 = 0.97%</label>
+        </div>
+
+        <div class="question-group">
+          <p><strong>3. NPL Coverage Ratio (Y1 & Y2):</strong></p>
+          <label><input type="radio" name="coverage" value="Y1=71% | Y2=72%"> Y1 = 71% | Y2 = 72%</label>
+          <label><input type="radio" name="coverage" value="Y1=76.5% | Y2=73.3%"> Y1 = 76.5% | Y2 = 73.3%</label>
+          <label><input type="radio" name="coverage" value="Y1=78% | Y2=74%"> Y1 = 78% | Y2 = 74%</label>
+          <label><input type="radio" name="coverage" value="Y1=78% | Y2=78%"> Y1 = 78% | Y2 = 78%</label>
+        </div>
+
+        <div style="text-align: center; margin-top: 40px;">
+          <button onclick="submitActivity()" style="font-size: 1.2rem; padding: 18px 36px;">
+            📤 Submit Analysis
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Result Page -->
+    <div id="resultPage" style="display:none;">
+      <div class="box">
+        <h2>📊 Assessment Results</h2>
+        <div id="result"></div>
+        <div style="text-align: center; margin-top: 30px;">
+          <button onclick="window.location.href='index.html'" style="font-size: 1.1rem; padding: 16px 32px;">
+            ← Return to Dashboard
+          </button>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- ===== ACTIVITY 2: ROUND ===== -->
-  <div id="page-a2-round" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
-    <div class="p-5 sm:p-7 md:p-9">
-      <div class="flex items-center justify-between mb-1">
-        <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider" id="a2-round-label">Round 1</span>
-        <span class="text-xs text-gray-400" id="a2-score-inline">0 / 0 correct</span>
-      </div>
-      <h2 class="text-lg sm:text-xl font-black text-gray-900 mb-1" id="a2-round-title"></h2>
-      <p class="text-sm text-gray-500 mb-5" id="a2-round-instruction"></p>
-
-      <!-- Category legend -->
-      <div class="flex flex-wrap gap-2 mb-5" id="a2-legend"></div>
-
-      <!-- Items -->
-      <div class="grid gap-3" id="a2-items"></div>
-
-      <button id="a2-next-btn" class="hidden btn-secondary text-white w-full mt-6 py-2.5 rounded-xl font-bold text-sm" onclick="a2Advance()">Continue →</button>
-    </div>
-  </div>
-
-  <!-- ===== ACTIVITY 2: RESULTS ===== -->
-  <div id="page-a2-end" class="hidden w-full max-w-2xl glass rounded-2xl sm:rounded-3xl shadow-2xl card-entrance scroll-container mt-4">
-    <div class="p-5 sm:p-8 md:p-10 text-center">
-      <div class="text-4xl mb-3">🏆</div>
-      <h2 class="text-2xl font-black text-gray-900 mb-1">Activity 2 Complete!</h2>
-      <p class="text-gray-500 text-sm mb-6">Classification results</p>
-      <div class="flex justify-center mb-4">
-        <div class="score-ring" id="a2-score-display">—</div>
-      </div>
-      <div id="a2-score-label" class="text-base font-semibold text-gray-700 mb-6"></div>
-
-      <!-- Key insights -->
-      <div class="bg-sky-50 border border-sky-200 rounded-xl p-4 mb-6 text-left">
-        <div class="font-bold text-sky-800 mb-2 text-sm">💡 Key Takeaways</div>
-        <ul class="text-sm text-gray-700 space-y-1.5">
-          <li>• <strong>Physical risk</strong> = damage caused by climate events (floods, fires, drought)</li>
-          <li>• <strong>Transition risk</strong> = economic impact of shifting to low-carbon economy (policy, tech, market)</li>
-          <li>• <strong>NGFS Portal & IEA</strong> are scenario frameworks; <strong>ERA5</strong> is observed climate data; <strong>MSCI Climate</strong> is financial/sector data</li>
-        </ul>
-      </div>
-
-      <div class="flex gap-3 justify-center flex-wrap">
-        <button onclick="retryA2()" class="border-2 border-indigo-500 text-indigo-600 px-5 py-2.5 rounded-xl font-semibold text-sm hover:bg-indigo-50 transition">↺ Retry</button>
-        <button onclick="goHome()" class="btn-success text-white px-8 py-2.5 rounded-xl font-bold text-sm">🏠 Home</button>
-      </div>
-    </div>
-  </div>
-
-<script>
-// ─────────────────────────────────────
-// DATA
-// ─────────────────────────────────────
-
-const A1_QUESTIONS = [
-  {
-    q: "A government introduces carbon taxes immediately, invests heavily in renewables, and reaches net zero by 2050.",
-    options: ["Delayed Transition", "Hot House World", "Net Zero 2050", "SSP5-8.5"],
-    correct: 2
-  },
-  {
-    q: "Countries delay climate action until 2030 and then rapidly introduce strict policies.",
-    options: ["Net Zero 2050", "Delayed Transition", "Below 2°C", "SSP1-1.9"],
-    correct: 1
-  },
-  {
-    q: "Current policies continue with little additional climate action.",
-    options: ["Hot House World", "Net Zero 2050", "SSP1-2.6", "Below 2°C"],
-    correct: 0
-  },
-  {
-    q: "Which scenario generally has the highest physical risk?",
-    options: ["Net Zero 2050", "Below 2°C", "Delayed Transition", "Hot House World"],
-    correct: 3
-  },
-  {
-    q: "Which scenario usually carries the highest transition risk?",
-    options: ["Net Zero 2050", "Delayed Transition", "Hot House World", "SSP5-8.5"],
-    correct: 1
-  }
-];
-
-const A2_ROUNDS = [
-  {
-    id: "risk",
-    label: "Round 1 of 2",
-    title: "Risk Classification",
-    instruction: "For each item, select whether it is a Physical Risk or a Transition Risk.",
-    categories: ["Physical Risk", "Transition Risk"],
-    colors: ["#0d9488", "#6366f1"],
-    items: [
-      { text: "Flooding of coastal facilities",     correct: 0 },
-      { text: "Carbon tax increase",                correct: 1 },
-      { text: "Wildfires affecting assets",         correct: 0 },
-      { text: "Stranded fossil fuel assets",        correct: 1 }
-    ]
-  },
-  {
-    id: "data",
-    label: "Round 2 of 2",
-    title: "Data Source Classification",
-    instruction: "For each data source, select the correct category.",
-    categories: ["Scenario Framework", "Physical Climate Data", "Financial / Sector Data"],
-    colors: ["#0891b2", "#059669", "#7c3aed"],
-    items: [
-      { text: "NGFS Portal",        correct: 0 },
-      { text: "ERA5",               correct: 1 },
-      { text: "MSCI Climate",       correct: 2 },
-      { text: "IEA Energy Outlook", correct: 0 }
-    ]
-  }
-];
-
-// ─────────────────────────────────────
-// PAGE MANAGEMENT
-// ─────────────────────────────────────
-
-function showOnly(id) {
-  ['page-home','page-a1-intro','page-a1-q','page-a1-end',
-   'page-a2-intro','page-a2-round','page-a2-end'].forEach(p => {
-    document.getElementById(p).classList.add('hidden');
-  });
-  const el = document.getElementById(id);
-  el.classList.remove('hidden');
-  el.classList.remove('card-entrance');
-  void el.offsetWidth;
-  el.classList.add('card-entrance');
-  window.scrollTo(0,0);
-}
-
-function goHome() { showOnly('page-home'); }
-function startActivity1() { showOnly('page-a1-intro'); }
-function startActivity2() { showOnly('page-a2-intro'); }
-
-// ─────────────────────────────────────
-// ACTIVITY 1
-// ─────────────────────────────────────
-
-let a1Index = 0, a1Score = 0, a1Answered = [];
-
-function beginA1() {
-  a1Index = 0; a1Score = 0; a1Answered = [];
-  showOnly('page-a1-q');
-  renderA1();
-}
-function retryA1() { beginA1(); }
-
-function renderA1() {
-  const q = A1_QUESTIONS[a1Index];
-  document.getElementById('a1-q-label').textContent = `Question ${a1Index+1} of ${A1_QUESTIONS.length}`;
-  document.getElementById('a1-q-text').textContent = q.q;
-  document.getElementById('a1-feedback').classList.add('hidden');
-  document.getElementById('a1-next-btn').classList.add('hidden');
-  document.getElementById('a1-progress').style.width = `${(a1Index / A1_QUESTIONS.length) * 100}%`;
-
-  // Dots
-  const dotsEl = document.getElementById('a1-dots');
-  dotsEl.innerHTML = '';
-  A1_QUESTIONS.forEach((_, i) => {
-    const d = document.createElement('div');
-    d.className = 'dot';
-    if (i < a1Index) d.classList.add(a1Answered[i] ? 'done' : 'wrong-dot');
-    else if (i === a1Index) d.classList.add('active');
-    dotsEl.appendChild(d);
-  });
-
-  // Options
-  const optsEl = document.getElementById('a1-options');
-  optsEl.innerHTML = '';
-  const labels = ['A', 'B', 'C', 'D'];
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn flex items-center gap-3 text-sm sm:text-base';
-    btn.innerHTML = `<span class="flex-shrink-0 w-7 h-7 rounded-full bg-gray-200 flex items-center justify-center font-bold text-xs text-gray-600">${labels[i]}</span><span>${opt}</span>`;
-    btn.onclick = () => a1Answer(i);
-    optsEl.appendChild(btn);
-  });
-}
-
-function a1Answer(chosen) {
-  const q = A1_QUESTIONS[a1Index];
-  const btns = document.querySelectorAll('#a1-options .option-btn');
-  btns.forEach(b => b.disabled = true);
-
-  const correct = chosen === q.correct;
-  a1Answered.push(correct);
-  if (correct) a1Score++;
-
-  btns[chosen].classList.add(correct ? 'correct' : 'wrong');
-  if (!correct) btns[q.correct].classList.add('correct');
-
-  const fb = document.getElementById('a1-feedback');
-  fb.className = correct ? 'feedback-correct mb-4 text-sm font-medium' : 'feedback-wrong mb-4 text-sm font-medium';
-  fb.innerHTML = correct
-    ? `✅ Correct! <strong>${q.options[q.correct]}</strong> is the right scenario.`
-    : `❌ Not quite. The correct answer is <strong>${q.options[q.correct]}</strong>.`;
-  fb.classList.remove('hidden');
-
-  const nextBtn = document.getElementById('a1-next-btn');
-  nextBtn.classList.remove('hidden');
-  if (a1Index === A1_QUESTIONS.length - 1) {
-    nextBtn.textContent = 'See Results →';
-  } else {
-    nextBtn.textContent = 'Next Question →';
-  }
-}
-
-function a1Next() {
-  a1Index++;
-  if (a1Index >= A1_QUESTIONS.length) {
-    showA1Results();
-  } else {
-    renderA1();
-  }
-}
-
-function showA1Results() {
-  showOnly('page-a1-end');
-  document.getElementById('a1-score-display').textContent = `${a1Score}/${A1_QUESTIONS.length}`;
-  const pct = a1Score / A1_QUESTIONS.length;
-  let label = pct === 1 ? '🌟 Perfect score! Excellent scenario knowledge.' :
-              pct >= 0.6 ? '👍 Good work! Review any missed scenarios.' :
-              '📚 Keep studying — scenario selection is a key skill.';
-  document.getElementById('a1-score-label').textContent = label;
-  document.getElementById('a1-progress').style.width = '100%';
-}
-
-// ─────────────────────────────────────
-// ACTIVITY 2
-// ─────────────────────────────────────
-
-let a2RoundIdx = 0, a2TotalCorrect = 0, a2TotalItems = 0;
-let a2ItemState = []; // per-item: null | correct | wrong
-
-function beginA2() {
-  a2RoundIdx = 0; a2TotalCorrect = 0; a2TotalItems = 0;
-  showOnly('page-a2-round');
-  renderA2Round();
-}
-function retryA2() { beginA2(); }
-
-function renderA2Round() {
-  const round = A2_ROUNDS[a2RoundIdx];
-  a2ItemState = round.items.map(() => null);
-  document.getElementById('a2-round-label').textContent = round.label;
-  document.getElementById('a2-round-title').textContent = round.title;
-  document.getElementById('a2-round-instruction').textContent = round.instruction;
-  document.getElementById('a2-next-btn').classList.add('hidden');
-  document.getElementById('a2-score-inline').textContent = '0 / ' + round.items.length + ' correct';
-
-  // Legend
-  const legend = document.getElementById('a2-legend');
-  legend.innerHTML = '';
-  round.categories.forEach((cat, i) => {
-    const chip = document.createElement('span');
-    chip.className = 'chip text-white text-xs';
-    chip.style.background = round.colors[i];
-    chip.textContent = cat;
-    legend.appendChild(chip);
-  });
-
-  // Items
-  const itemsEl = document.getElementById('a2-items');
-  itemsEl.innerHTML = '';
-  round.items.forEach((item, idx) => {
-    const wrapper = document.createElement('div');
-    wrapper.className = 'classify-item';
-    wrapper.id = `a2-item-${idx}`;
-
-    const label = document.createElement('p');
-    label.className = 'text-sm font-semibold text-gray-800 mb-2';
-    label.textContent = item.text;
-
-    const btnsRow = document.createElement('div');
-    btnsRow.className = 'flex flex-wrap gap-2';
-    btnsRow.id = `a2-item-btns-${idx}`;
-
-    round.categories.forEach((cat, catIdx) => {
-      const btn = document.createElement('button');
-      btn.className = 'chip text-xs border-2 bg-white text-gray-700';
-      btn.style.borderColor = round.colors[catIdx];
-      btn.textContent = cat;
-      btn.onclick = () => a2Classify(idx, catIdx);
-      btnsRow.appendChild(btn);
-    });
-
-    const feedback = document.createElement('p');
-    feedback.className = 'text-xs mt-2 hidden font-medium';
-    feedback.id = `a2-item-fb-${idx}`;
-
-    wrapper.appendChild(label);
-    wrapper.appendChild(btnsRow);
-    wrapper.appendChild(feedback);
-    itemsEl.appendChild(wrapper);
-  });
-}
-
-function a2Classify(itemIdx, chosenCat) {
-  if (a2ItemState[itemIdx] !== null) return; // already answered
-  const round = A2_ROUNDS[a2RoundIdx];
-  const item = round.items[itemIdx];
-  const correct = chosenCat === item.correct;
-
-  a2ItemState[itemIdx] = correct ? 'correct' : 'wrong';
-  if (correct) a2TotalCorrect++;
-  a2TotalItems++;
-
-  // Update item wrapper
-  const wrapper = document.getElementById(`a2-item-${itemIdx}`);
-  wrapper.classList.add(correct ? 'answered' : 'answered-wrong');
-
-  // Disable all buttons for this item
-  const btnsRow = document.getElementById(`a2-item-btns-${itemIdx}`);
-  btnsRow.querySelectorAll('button').forEach((b, ci) => {
-    b.disabled = true;
-    if (ci === item.correct) {
-      b.style.background = round.colors[ci];
-      b.style.color = '#fff';
+  <script>
+    // ---- EdWatch score sync: paste APPS_SCRIPT_URL to match your login page ----
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJ4WSZSJBDwgLdGvY43ygE2hEXlE-1etkOU9GtlqiVfzcH3YdQGWFe2CtBt5013OLLQ/exec';
+    async function saveScoreToSheet(activityKey, score, total) {
+      try {
+        const email = localStorage.getItem('edwatch_email');
+        if (!email) return;
+        // Combine into one "score/total" string since the backend's saveScore()
+        // takes a single score value (no separate total param).
+        const value = total ? `${score}/${total}` : `${score}`;
+        const url = `${APPS_SCRIPT_URL}?action=saveScore&email=${encodeURIComponent(email)}&activity=${encodeURIComponent(activityKey)}&score=${encodeURIComponent(value)}`;
+        await fetch(url);
+      } catch (err) {
+        console.warn('EdWatch: could not save score', err);
+      }
     }
-  });
 
-  // Show feedback
-  const fb = document.getElementById(`a2-item-fb-${itemIdx}`);
-  fb.classList.remove('hidden');
-  fb.style.color = correct ? '#065f46' : '#991b1b';
-  fb.textContent = correct
-    ? `✅ Correct — ${round.categories[item.correct]}`
-    : `❌ This is ${round.categories[item.correct]}`;
+    let timerInterval;
+    let timeLeft = 960; // 16 minutes in seconds
 
-  // Update score display
-  const doneCount = a2ItemState.filter(s => s !== null).length;
-  const correctCount = a2ItemState.filter(s => s === 'correct').length;
-  document.getElementById('a2-score-inline').textContent = `${correctCount} / ${round.items.length} correct`;
-
-  // Show next when all answered
-  if (doneCount === round.items.length) {
-    document.getElementById('a2-next-btn').classList.remove('hidden');
-    if (a2RoundIdx === A2_ROUNDS.length - 1) {
-      document.getElementById('a2-next-btn').textContent = 'See Results →';
-    } else {
-      document.getElementById('a2-next-btn').textContent = 'Next Round →';
+    function startActivity(){
+      document.getElementById("intro").style.display = "none";
+      document.getElementById("activity").style.display = "block";
+      startTimer();
     }
-  }
-}
 
-function a2Advance() {
-  a2RoundIdx++;
-  if (a2RoundIdx >= A2_ROUNDS.length) {
-    showA2Results();
-  } else {
-    showOnly('page-a2-round');
-    renderA2Round();
-  }
-}
+    function startTimer(){
+      const timerEl = document.getElementById("timer");
+      timerInterval = setInterval(()=>{
+        let minutes = Math.floor(timeLeft / 60);
+        let seconds = timeLeft % 60;
+        timerEl.textContent = `⏳ Time Remaining: ${minutes}:${seconds < 10 ? '0'+seconds : seconds}`;
+        timeLeft--;
+        if(timeLeft < 0){
+          clearInterval(timerInterval);
+          alert("⏰ Time's up! Automatically submitting your assessment.");
+          submitActivity();
+        }
+      },1000);
+    }
 
-function showA2Results() {
-  showOnly('page-a2-end');
-  const total = A2_ROUNDS.reduce((s, r) => s + r.items.length, 0);
-  document.getElementById('a2-score-display').textContent = `${a2TotalCorrect}/${total}`;
-  const pct = a2TotalCorrect / total;
-  let label = pct === 1 ? '🌟 Flawless classification!' :
-              pct >= 0.6 ? '👍 Solid understanding of climate risk and data sources.' :
-              '📚 Review the categories — these distinctions are essential for reporting.';
-  document.getElementById('a2-score-label').textContent = label;
-}
-</script>
+    function submitActivity(){
+      clearInterval(timerInterval);
+      let score = 0;
+
+      // === PART A: Signals ===
+      const positives = Array.from(document.querySelectorAll('input[name="positives"]:checked')).map(el=>el.value);
+      const redflags = Array.from(document.querySelectorAll('input[name="redflags"]:checked')).map(el=>el.value);
+
+      const correctPositives = ["momentum", "liquidity", "profit"];
+      const correctRedflags = ["assetquality", "funding", "efficiency"];
+
+      let signalScore = 0;
+      positives.forEach(p => { if(correctPositives.includes(p)) signalScore++; });
+      redflags.forEach(r => { if(correctRedflags.includes(r)) signalScore++; });
+      if(signalScore > 6) signalScore = 6; // cap signals score
+
+      // === PART B: Ratios ===
+      const correctRatios = {
+        cti: "Y1=56.8% | Y2=58.1%",
+        roa: "Y1=0.95% | Y2=0.97%",
+        coverage: "Y1=78% | Y2=74%"
+      };
+
+      let ratioScore = 0;
+      for(let id in correctRatios){
+        const selected = document.querySelector(`input[name="${id}"]:checked`);
+        if(selected && selected.value === correctRatios[id]) ratioScore++;
+      }
+
+      score = signalScore + ratioScore;
+
+      // Save score to the EdWatch tracking sheet
+      saveScoreToSheet('Activity5', score, 9);
+
+      // === Show results page ===
+      document.getElementById("activity").style.display = "none";
+      const resultEl = document.getElementById("result");
+      document.getElementById("resultPage").style.display = "block";
+
+      // Performance evaluation
+      let performanceLevel = "";
+      let performanceColor = "";
+      let performanceIcon = "";
+      
+      if (score >= 8) {
+        performanceLevel = "Outstanding Performance";
+        performanceColor = "#059669";
+        performanceIcon = "🌟";
+      } else if (score >= 6) {
+        performanceLevel = "Strong Performance";
+        performanceColor = "#0891b2";
+        performanceIcon = "🎯";
+      } else if (score >= 4) {
+        performanceLevel = "Satisfactory Performance";
+        performanceColor = "#ca8a04";
+        performanceIcon = "📈";
+      } else {
+        performanceLevel = "Needs Improvement";
+        performanceColor = "#dc2626";
+        performanceIcon = "📚";
+      }
+
+      resultEl.innerHTML = `
+        <div style="text-align: center; margin-bottom: 30px;">
+          <div style="font-size: 4rem; margin-bottom: 15px;">${performanceIcon}</div>
+          <h3 style="color: ${performanceColor}; font-size: 2rem; margin-bottom: 10px;">Final Score: ${score} / 9</h3>
+          <p style="font-size: 1.3rem; font-weight: 600; color: ${performanceColor};">${performanceLevel}</p>
+        </div>
+        
+        <div style="background: linear-gradient(135deg, rgba(30, 64, 175, 0.1), rgba(55, 48, 163, 0.05)); padding: 25px; border-radius: 15px; margin: 25px 0;">
+          <h4 style="color: #1e40af; margin-bottom: 15px;">📊 Performance Breakdown</h4>
+          <p style="margin-bottom: 8px;"><strong>Signal Analysis:</strong> ${signalScore} / 6 points</p>
+          <p style="margin-bottom: 8px;"><strong>Ratio Calculations:</strong> ${ratioScore} / 3 points</p>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.1), rgba(16, 185, 129, 0.05)); padding: 25px; border-radius: 15px; margin: 25px 0; border: 2px solid rgba(5, 150, 105, 0.2);">
+          <h4 style="color: #059669; margin-bottom: 15px;">✅ Model Answer - Key Insights</h4>
+          
+          <div style="margin-bottom: 20px;">
+            <p style="font-weight: 600; color: #1e40af; margin-bottom: 8px;">Positive Indicators:</p>
+            <p style="color: #4b5563; line-height: 1.6;">• <strong>Revenue Growth Momentum:</strong> Strong income growth with NII up 27% and non-interest income up 19%</p>
+            <p style="color: #4b5563; line-height: 1.6;">• <strong>Balanced Growth Profile:</strong> Synchronized growth in loans (15.6%) and deposits (16.7%) maintaining healthy LDR</p>
+            <p style="color: #4b5563; line-height: 1.6;">• <strong>Profitability Enhancement:</strong> ROA improvement from 0.95% to 0.97% with net income growth of 15.6%</p>
+          </div>
+
+          <div style="margin-bottom: 20px;">
+            <p style="font-weight: 600; color: #dc2626; margin-bottom: 8px;">Critical Risk Factors:</p>
+            <p style="color: #4b5563; line-height: 1.6;">• <strong>Asset Quality Deterioration:</strong> NPL ratio increased from 6.0% to 6.8% with coverage declining from 78% to 74%</p>
+            <p style="color: #4b5563; line-height: 1.6;">• <strong>Funding Mix Pressure:</strong> CASA ratio dropped from 52% to 48%, indicating higher funding costs</p>
+            <p style="color: #4b5563; line-height: 1.6;">• <strong>Operational Efficiency Decline:</strong> Cost-to-income ratio worsened from 56.8% to 58.2%</p>
+          </div>
+
+          <div style="background: rgba(255, 255, 255, 0.7); padding: 20px; border-radius: 12px; margin-top: 20px;">
+            <p style="font-weight: 600; color: #1e40af; margin-bottom: 8px;">Key Financial Ratios:</p>
+            <p style="color: #4b5563;">• <strong>Cost-to-Income:</strong> Y1 = 56.8% | Y2 = 58.1%</p>
+            <p style="color: #4b5563;">• <strong>Return on Assets:</strong> Y1 = 0.95% | Y2 = 0.97%</p>
+            <p style="color: #4b5563;">• <strong>NPL Coverage:</strong> Y1 = 78% | Y2 = 74%</p>
+          </div>
+        </div>
+
+        <div style="background: linear-gradient(135deg, rgba(124, 58, 237, 0.1), rgba(139, 69, 193, 0.05)); padding: 25px; border-radius: 15px; margin: 25px 0; border: 2px solid rgba(124, 58, 237, 0.2);">
+          <h4 style="color: #7c3aed; margin-bottom: 15px;">🎯 Strategic Recommendations</h4>
+          <p style="color: #4b5563; line-height: 1.6; margin-bottom: 12px;"><strong>Immediate Actions:</strong> Focus on CASA rebuilding initiatives and implement stricter credit controls to address asset quality concerns.</p>
+          <p style="color: #4b5563; line-height: 1.6; margin-bottom: 12px;"><strong>Medium-term Strategy:</strong> Enhance operational efficiency through cost optimization programs and digital transformation.</p>
+          <p style="color: #4b5563; line-height: 1.6;"><strong>Risk Management:</strong> Strengthen provisioning practices and implement comprehensive ECL monitoring frameworks.</p>
+        </div>
+      `;
+    }
+  </script>
 </body>
 </html>
