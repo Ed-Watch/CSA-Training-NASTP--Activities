@@ -398,10 +398,176 @@ th.lb-sortable:hover { color: var(--ew-ink); }
 
 .hidden-panel { display: none; }
 
+/* ---- Day Selector ---- */
+.day-selector {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.day-card {
+    background: #fff;
+    border: 2px solid #e7e5df;
+    border-radius: 18px;
+    padding: 2.5rem 2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.day-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 100% 0%, rgba(63,174,122,0.08), transparent 70%);
+    z-index: 0;
+}
+
+.day-card:hover {
+    border-color: var(--ew-sage);
+    box-shadow: 0 20px 50px rgba(63,174,122,0.15);
+    transform: translateY(-8px);
+}
+
+.day-card-content {
+    position: relative;
+    z-index: 1;
+}
+
+.day-number {
+    font-size: 3rem;
+    font-weight: 800;
+    color: var(--ew-sage);
+    margin-bottom: 0.5rem;
+}
+
+.day-card h3 {
+    font-size: 1.5rem;
+    color: var(--ew-ink);
+    margin: 0.5rem 0;
+}
+
+.day-card p {
+    color: #5b6b66;
+    font-size: 0.95rem;
+    margin: 1rem 0;
+    line-height: 1.6;
+}
+
+.day-btn {
+    width: 100%;
+    padding: 0.85rem 1.5rem;
+    margin-top: 1.5rem;
+    background: var(--ew-sage);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.day-btn:hover {
+    background: var(--ew-sage-dark);
+}
+
+/* ---- Day 2 Resources ---- */
+.resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.resource-card {
+    background: #fff;
+    border: 1px solid #e7e5df;
+    border-radius: 14px;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    transition: box-shadow 0.18s, transform 0.18s;
+}
+
+.resource-card:hover {
+    box-shadow: 0 14px 32px rgba(19,36,31,0.08);
+    transform: translateY(-2px);
+}
+
+.resource-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+    background: rgba(63,174,122,0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+}
+
+.resource-card h4 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--ew-ink);
+}
+
+.resource-card p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #5b6b66;
+    flex-grow: 1;
+}
+
+.download-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    background: var(--ew-sage);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.2s;
+    text-align: center;
+    justify-content: center;
+}
+
+.download-btn:hover {
+    background: var(--ew-sage-dark);
+}
+
+.back-btn {
+    background: #fff;
+    border: 1px solid #e7e5df;
+    color: var(--ew-ink);
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-right: 0.5rem;
+}
+
+.back-btn:hover {
+    background: #f6f5f1;
+}
+
 @media (max-width: 640px) {
     .nav-menu { gap: 0; }
     .nav-tab { padding: 0.45rem 0.6rem; font-size: 0.85rem; }
     .hero { padding: 1.5rem; }
+    .day-selector { grid-template-columns: 1fr; gap: 1.5rem; }
+    .day-number { font-size: 2rem; }
 }
 </style>
 </head>
@@ -450,8 +616,9 @@ th.lb-sortable:hover { color: var(--ew-ink); }
     <div class="nav-container">
         <a href="index.html" class="nav-logo"><span class="dot"></span> EdWatch Training</a>
         <ul class="nav-menu" id="nav-menu">
-            <li><button class="nav-tab active" id="tab-activities" type="button" onclick="showTab('activities')">My Activities</button></li>
-            <li><button class="nav-tab" id="tab-leaderboard" type="button" onclick="showTab('leaderboard')">Leaderboard</button></li>
+            <li><button class="nav-tab active" id="tab-activities" type="button" onclick="showTab('activities')" style="display: none;">My Activities</button></li>
+            <li><button class="back-btn" id="back-to-days-btn" onclick="backToDaySelector()" style="display: none;">← Back to Days</button></li>
+            <li><button class="nav-tab" id="tab-leaderboard" type="button" onclick="showTab('leaderboard')" style="display: none;">Leaderboard</button></li>
             <li class="nav-item nav-user" id="nav-user-badge" style="display:none;">
                 <button class="nav-user-trigger" id="nav-user-trigger" type="button">
                     <span id="nav-user-name"></span>
@@ -472,10 +639,45 @@ th.lb-sortable:hover { color: var(--ew-ink); }
 <main>
     <section class="activities">
 
-        <div class="hero">
+        <!-- ===== Day Selector panel ===== -->
+        <div id="panel-day-selector">
+            <div class="hero">
+                <div class="hero-text">
+                    <div class="hero-eyebrow">NASTP CSA Training</div>
+                    <h1 id="hero-welcome">Welcome to EdWatch Training</h1>
+                    <p>Select the day you want to work on — each day has different activities and resources.</p>
+                </div>
+            </div>
+
+            <div class="section-title-row">
+                <h2>Select Your Training Day</h2>
+            </div>
+            
+            <div class="day-selector">
+                <div class="day-card" onclick="selectDay('day1')">
+                    <div class="day-card-content">
+                        <div class="day-number">1</div>
+                        <h3>Day 1</h3>
+                        <p>Complete the 5 interactive training activities and download the case study on Hardening of Utilities.</p>
+                        <button class="day-btn">Start Day 1</button>
+                    </div>
+                </div>
+                
+                <div class="day-card" onclick="selectDay('day2')">
+                    <div class="day-card-content">
+                        <div class="day-number">2</div>
+                        <h3>Day 2</h3>
+                        <p>Access and download essential resources including case studies, SASB portfolio, and financial models.</p>
+                        <button class="day-btn">Access Day 2 Resources</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero" id="panel-day1">
             <div class="hero-text">
                 <div class="hero-eyebrow">ESG &amp; Sustainability Training</div>
-                <h1 id="hero-welcome">Welcome to EdWatch Training</h1>
+                <h1>Day 1 - Training Activities</h1>
                 <p>Work through each activity below — your score is saved automatically and feeds the live leaderboard.</p>
             </div>
             <div class="hero-progress">
@@ -484,13 +686,82 @@ th.lb-sortable:hover { color: var(--ew-ink); }
             </div>
         </div>
 
+        <!-- ===== Day 1 Case Study ===== -->
+        <div id="day1-case-study" style="display: none; margin-bottom: 2rem;">
+            <div class="section-title-row">
+                <h2>Day 1 Case Study</h2>
+            </div>
+            <div class="resource-card" style="max-width: 400px;">
+                <div class="resource-icon">📚</div>
+                <h4>Hardening of Utilities - Con Ed's Adaptation</h4>
+                <p>Case study on Con Ed's approach to utility infrastructure hardening and climate adaptation.</p>
+                <a href="assests/Day_1_Case Study_Hardening of Utilities-Con Ed's adaption.pdf" download class="download-btn">
+                    <span>⬇</span> Download PDF
+                </a>
+            </div>
+        </div>
+
         <!-- ===== Activities panel ===== -->
-        <div id="panel-activities">
+        <div id="panel-activities" style="display: none;">
             <div class="section-title-row">
                 <h2>Training Activities</h2>
                 <span>5 activities · ~50 minutes total</span>
             </div>
             <div class="activity-grid" id="activity-grid"></div>
+        </div>
+
+        <!-- ===== Day 2 Resources panel ===== -->
+        <div id="panel-day2" style="display: none;">
+            <div class="hero">
+                <div class="hero-text">
+                    <div class="hero-eyebrow">Day 2 Resources</div>
+                    <h1>Download and Review Resources</h1>
+                    <p>Access all the key resources for Day 2 including case studies, analysis tools, and disclosure reports.</p>
+                </div>
+            </div>
+
+            <div class="section-title-row">
+                <h2>Available Resources</h2>
+                <span>4 files to download</span>
+            </div>
+
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">📄</div>
+                    <h4>Case Study - AIH</h4>
+                    <p>Asset management case study for Day 2 analysis</p>
+                    <a href="assests/Day_2_Case study - AIH (asset management).pdf" download class="download-btn">
+                        <span>⬇</span> Download PDF
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">📋</div>
+                    <h4>SASB Portfolio Look</h4>
+                    <p>SASB Look-Through Crib-Sheet for portfolio analysis</p>
+                    <a href="assests/Day_2_SASB Look-Through Crib-Sheet.pdf" download class="download-btn">
+                        <span>⬇</span> Download PDF
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">📊</div>
+                    <h4>Climate Risk Stress Test Model</h4>
+                    <p>Excel model for climate risk stress testing</p>
+                    <a href="assests/Day_2_Climate_Risk_Stress_Test_Model.xlsx" download class="download-btn">
+                        <span>⬇</span> Download Excel
+                    </a>
+                </div>
+
+                <div class="resource-card">
+                    <div class="resource-icon">📈</div>
+                    <h4>IFRS S2 Disclosure Report</h4>
+                    <p>IFRS S2 Disclosure Report for AIH company</p>
+                    <a href="assests/Day_2_IFRS_S2_Disclosure_Report_AIH.xlsx" download class="download-btn">
+                        <span>⬇</span> Download Excel
+                    </a>
+                </div>
+            </div>
         </div>
 
         <!-- ===== Leaderboard panel ===== -->
@@ -681,7 +952,9 @@ function toggleSort() {
     renderLeaderboard();
 }
 
-/* ---------------- Tabs ---------------- */
+/* ---------------- Tabs & Day Selection ---------------- */
+
+let currentDay = null; // tracks current day: 'day1', 'day2', or null
 
 function showTab(tab) {
     document.getElementById('tab-activities').classList.toggle('active', tab === 'activities');
@@ -691,6 +964,56 @@ function showTab(tab) {
     if (tab === 'leaderboard' && !leaderboardLoaded) loadLeaderboard();
 }
 
+function selectDay(day) {
+    currentDay = day;
+    
+    // Hide day selector
+    document.getElementById('panel-day-selector').style.display = 'none';
+    
+    // Show back button
+    document.getElementById('back-to-days-btn').style.display = 'inline-block';
+    document.getElementById('tab-activities').style.display = 'inline-block';
+    document.getElementById('tab-leaderboard').style.display = 'inline-block';
+    
+    if (day === 'day1') {
+        // Show Day 1 activities
+        document.getElementById('panel-day1').style.display = 'block';
+        document.getElementById('day1-case-study').style.display = 'block';
+        document.getElementById('panel-activities').style.display = 'block';
+        document.getElementById('panel-day2').style.display = 'none';
+        document.getElementById('tab-activities').classList.add('active');
+        document.getElementById('tab-leaderboard').classList.remove('active');
+        document.getElementById('panel-leaderboard').classList.add('hidden-panel');
+        renderActivityCards();
+        renderLeaderboardHead();
+    } else if (day === 'day2') {
+        // Show Day 2 resources
+        document.getElementById('panel-day1').style.display = 'none';
+        document.getElementById('day1-case-study').style.display = 'none';
+        document.getElementById('panel-activities').style.display = 'none';
+        document.getElementById('panel-day2').style.display = 'block';
+        document.getElementById('tab-activities').classList.remove('active');
+        document.getElementById('tab-leaderboard').classList.remove('active');
+        document.getElementById('panel-leaderboard').classList.add('hidden-panel');
+    }
+}
+
+function backToDaySelector() {
+    currentDay = null;
+    
+    // Show day selector
+    document.getElementById('panel-day-selector').style.display = 'block';
+    document.getElementById('panel-day1').style.display = 'none';
+    document.getElementById('panel-activities').style.display = 'none';
+    document.getElementById('panel-day2').style.display = 'none';
+    document.getElementById('panel-leaderboard').classList.add('hidden-panel');
+    
+    // Hide back button
+    document.getElementById('back-to-days-btn').style.display = 'none';
+    document.getElementById('tab-activities').style.display = 'none';
+    document.getElementById('tab-leaderboard').style.display = 'none';
+}
+
 /* ---------------- Login / session ---------------- */
 
 function showLoggedInState(name, email) {
@@ -698,7 +1021,22 @@ function showLoggedInState(name, email) {
     activitiesSection.classList.remove('activities-locked');
     navUserBadge.style.display = 'inline-block';
     navUserName.textContent = '👤 ' + name;
-    document.getElementById('hero-welcome').textContent = `Welcome back, ${name.split(' ')[0]}`;
+    
+    // Show day selector instead of activities directly
+    document.getElementById('panel-day-selector').style.display = 'block';
+    document.getElementById('panel-activities').style.display = 'none';
+    document.getElementById('panel-day1').style.display = 'none';
+    document.getElementById('panel-day2').style.display = 'none';
+    document.getElementById('tab-activities').style.display = 'none';
+    document.getElementById('tab-leaderboard').style.display = 'none';
+    document.getElementById('back-to-days-btn').style.display = 'none';
+    
+    // Update hero welcome
+    const heroWelcome = document.querySelector('#panel-day-selector .hero-text h1');
+    if (heroWelcome) {
+        heroWelcome.textContent = `Welcome back, ${name.split(' ')[0]}!`;
+    }
+    
     loadUserProgress(email);
 }
 
@@ -712,6 +1050,13 @@ function logout() {
     loginNameInput.value = '';
     loginEmailInput.value = '';
     loginError.textContent = '';
+    currentDay = null;
+    
+    // Reset to day selector view
+    document.getElementById('panel-day-selector').style.display = 'none';
+    document.getElementById('panel-activities').style.display = 'none';
+    document.getElementById('panel-day1').style.display = 'none';
+    document.getElementById('panel-day2').style.display = 'none';
 }
 
 navUserTrigger.addEventListener('click', (e) => {
@@ -734,6 +1079,12 @@ window.addEventListener('DOMContentLoaded', () => {
     renderActivityCards();
     renderLeaderboardHead();
     activitiesSection.classList.add('activities-locked');
+    
+    // Initially hide all panels except day selector
+    document.getElementById('panel-day-selector').style.display = 'none';
+    document.getElementById('panel-activities').style.display = 'none';
+    document.getElementById('panel-day1').style.display = 'none';
+    document.getElementById('panel-day2').style.display = 'none';
 
     const savedName = localStorage.getItem('edwatch_name');
     const savedEmail = localStorage.getItem('edwatch_email');
