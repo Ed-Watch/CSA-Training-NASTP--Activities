@@ -11,8 +11,12 @@
     --ew-sage: #3fae7a;
     --ew-sage-dark: #2f8d62;
     --ew-amber: #e8a94c;
+    --ew-amber-dark: #cf8a2e;
+    --ew-teal: #1f7a78;
+    --ew-teal-light: #2a9d9a;
     --ew-slate: #6b7d8a;
     --ew-card: #faf8f3;
+    --ew-mist: #eef5f0;
     --ew-ink: #13241f;
 }
 
@@ -20,8 +24,9 @@
 body {
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    background: #f6f5f1;
+    background: var(--ew-mist);
     color: #1c2522;
+    min-height: 100vh;
 }
 
 /* ============================================================ */
@@ -180,9 +185,12 @@ body {
     align-items: center;
     justify-content: space-between;
     gap: 1rem;
+    flex-wrap: wrap;
 }
-.nav-logo { font-weight: 700; color: var(--ew-ink); text-decoration: none; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; }
+.nav-logo { font-weight: 700; color: var(--ew-ink); text-decoration: none; font-size: 1.1rem; display: flex; align-items: center; gap: 0.5rem; flex-shrink: 0; }
 .nav-logo .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--ew-sage); display: inline-block; }
+.nav-logo-img { height: 38px; width: auto; max-width: 160px; display: block; object-fit: contain; }
+.nav-logo-text { display: none; align-items: center; gap: 0.5rem; }
 
 .nav-menu { list-style: none; display: flex; gap: 0.4rem; margin: 0; padding: 0; align-items: center; }
 .nav-tab {
@@ -250,9 +258,67 @@ body {
     position: fixed;
     inset: 0;
     z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
     background:
-        radial-gradient(circle at 80% 10%, rgba(63,174,122,0.06), transparent 40%),
-        radial-gradient(circle at 10% 80%, rgba(232,169,76,0.06), transparent 40%);
+        radial-gradient(circle at 85% 8%, rgba(31,122,120,0.05), transparent 42%),
+        radial-gradient(circle at 8% 92%, rgba(232,169,76,0.06), transparent 42%),
+        var(--ew-mist);
+}
+.app-blob {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.22;
+    animation: blobDrift 30s ease-in-out infinite;
+}
+.app-blob-sage {
+    width: 32vw; height: 32vw;
+    max-width: 380px; max-height: 380px;
+    background: radial-gradient(circle, var(--ew-sage), transparent 70%);
+    top: -8%; right: -6%;
+}
+.app-blob-teal {
+    width: 26vw; height: 26vw;
+    max-width: 320px; max-height: 320px;
+    background: radial-gradient(circle, var(--ew-teal-light), transparent 70%);
+    bottom: 5%; left: -6%;
+    animation-duration: 34s;
+    animation-delay: -10s;
+}
+.app-blob-amber {
+    width: 20vw; height: 20vw;
+    max-width: 260px; max-height: 260px;
+    background: radial-gradient(circle, var(--ew-amber), transparent 70%);
+    bottom: -10%; right: 18%;
+    animation-duration: 26s;
+    animation-delay: -4s;
+}
+.app-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+        linear-gradient(rgba(19,36,31,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(19,36,31,0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(circle at 50% 0%, rgba(0,0,0,0.5), transparent 70%);
+}
+.app-icon {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    opacity: 0.07;
+    animation: iconFloat 12s ease-in-out infinite;
+}
+.app-icon.icon-leaf   { top: 22%; left: 6%; color: var(--ew-sage); }
+.app-icon.icon-chart  { top: 64%; right: 8%; color: var(--ew-teal); animation-delay: -4s; }
+.app-icon.icon-cap    { top: 8%; right: 28%; color: var(--ew-amber-dark); animation-delay: -7s; }
+.app-icon.icon-target { bottom: 8%; left: 24%; color: var(--ew-sage-dark); animation-delay: -2.5s; }
+@media (max-width: 640px) {
+    .app-icon { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .app-blob, .app-icon { animation: none; }
 }
 
 main { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
@@ -261,7 +327,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
 
 /* ---- Hero / welcome ---- */
 .hero {
-    background: linear-gradient(135deg, var(--ew-bg-deep), var(--ew-bg-mid));
+    background: linear-gradient(135deg, var(--ew-bg-deep), var(--ew-bg-mid) 60%, #123330);
     border-radius: 18px;
     padding: 2rem 2.25rem;
     color: #fff;
@@ -278,7 +344,9 @@ main { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 85% 20%, rgba(63,174,122,0.35), transparent 55%);
+    background:
+        radial-gradient(circle at 85% 15%, rgba(63,174,122,0.35), transparent 55%),
+        radial-gradient(circle at 15% 95%, rgba(31,122,120,0.3), transparent 50%);
 }
 .hero-text { position: relative; z-index: 1; }
 .hero-eyebrow { font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ew-amber); font-weight: 700; margin-bottom: 0.4rem; }
@@ -325,6 +393,10 @@ main { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
     display: flex; align-items: center; justify-content: center;
     font-size: 1.4rem;
 }
+.activity-card:nth-child(2) .icon-badge { background: rgba(31,122,120,0.13); }
+.activity-card:nth-child(3) .icon-badge { background: rgba(232,169,76,0.18); }
+.activity-card:nth-child(4) .icon-badge { background: rgba(31,122,120,0.13); }
+.activity-card:nth-child(5) .icon-badge { background: rgba(63,174,122,0.12); }
 .activity-eyebrow { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ew-sage-dark); }
 .activity-card h3 { margin: 0; font-size: 1.05rem; color: var(--ew-ink); }
 .activity-card p.desc { margin: 0; font-size: 0.86rem; color: #5b6b66; line-height: 1.45; flex-grow: 1; }
@@ -425,6 +497,13 @@ th.lb-sortable:hover { color: var(--ew-ink); }
     background: radial-gradient(circle at 100% 0%, rgba(63,174,122,0.08), transparent 70%);
     z-index: 0;
 }
+.day-card:nth-child(2)::before {
+    background: radial-gradient(circle at 100% 0%, rgba(31,122,120,0.09), transparent 70%);
+}
+.day-card:nth-child(2) .day-number { color: var(--ew-teal); }
+.day-card:nth-child(2) .day-btn { background: var(--ew-teal); }
+.day-card:nth-child(2) .day-btn:hover { background: #185f5d; }
+.day-card:nth-child(2):hover { border-color: var(--ew-teal); box-shadow: 0 20px 50px rgba(31,122,120,0.16); }
 
 .day-card:hover {
     border-color: var(--ew-sage);
@@ -509,6 +588,15 @@ th.lb-sortable:hover { color: var(--ew-ink); }
     justify-content: center;
     font-size: 1.8rem;
 }
+.resource-card:nth-child(2) .resource-icon { background: rgba(31,122,120,0.13); }
+.resource-card:nth-child(3) .resource-icon { background: rgba(232,169,76,0.18); }
+.resource-card:nth-child(4) .resource-icon { background: rgba(31,122,120,0.13); }
+.resource-card:nth-child(2) .download-btn,
+.resource-card:nth-child(4) .download-btn { background: var(--ew-teal); }
+.resource-card:nth-child(2) .download-btn:hover,
+.resource-card:nth-child(4) .download-btn:hover { background: #185f5d; }
+.resource-card:nth-child(3) .download-btn { background: var(--ew-amber-dark); }
+.resource-card:nth-child(3) .download-btn:hover { background: #b5791f; }
 
 .resource-card h4 {
     margin: 0;
@@ -563,11 +651,29 @@ th.lb-sortable:hover { color: var(--ew-ink); }
 }
 
 @media (max-width: 640px) {
-    .nav-menu { gap: 0; }
+    .nav-container { justify-content: center; }
+    .nav-logo { order: -1; flex-basis: 100%; justify-content: center; margin-bottom: 0.3rem; }
+    .nav-logo-img { height: 30px; }
+    .nav-menu { gap: 0; flex-wrap: wrap; justify-content: center; }
     .nav-tab { padding: 0.45rem 0.6rem; font-size: 0.85rem; }
     .hero { padding: 1.5rem; }
+    .hero h1 { font-size: 1.3rem; }
+    .hero-progress { width: 100%; }
     .day-selector { grid-template-columns: 1fr; gap: 1.5rem; }
     .day-number { font-size: 2rem; }
+    .day-card { padding: 2rem 1.4rem; }
+    .resources-grid { grid-template-columns: 1fr; }
+    main { padding: 1.5rem 1rem 3rem; }
+    .leaderboard-wrap { overflow-x: auto; }
+    table.leaderboard { min-width: 560px; }
+    .leaderboard-toolbar { flex-direction: column; align-items: stretch; }
+    .leaderboard-actions { justify-content: space-between; }
+}
+
+@media (max-width: 420px) {
+    .login-box { padding: 2rem 1.4rem; }
+    .login-logo { width: 220px; }
+    .activity-card { padding: 1.1rem; }
 }
 </style>
 </head>
@@ -614,7 +720,10 @@ th.lb-sortable:hover { color: var(--ew-ink); }
 <!-- ============================================================ -->
 <nav class="navbar">
     <div class="nav-container">
-        <a href="index.html" class="nav-logo"><span class="dot"></span> EdWatch Training</a>
+        <a href="index.html" class="nav-logo">
+            <img src="assests/logo.jpg" alt="EdWatch Training" class="nav-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <span class="nav-logo-text"><span class="dot"></span> EdWatch Training</span>
+        </a>
         <ul class="nav-menu" id="nav-menu">
             <li><button class="nav-tab active" id="tab-activities" type="button" onclick="showTab('activities')" style="display: none;">My Activities</button></li>
             <li><button class="back-btn" id="back-to-days-btn" onclick="backToDaySelector()" style="display: none;">← Back to Days</button></li>
@@ -634,7 +743,24 @@ th.lb-sortable:hover { color: var(--ew-ink); }
     </div>
 </nav>
 
-<div class="animated-background" aria-hidden="true"></div>
+<div class="animated-background" aria-hidden="true">
+    <span class="app-blob app-blob-sage"></span>
+    <span class="app-blob app-blob-teal"></span>
+    <span class="app-blob app-blob-amber"></span>
+    <div class="app-grid"></div>
+    <svg class="app-icon icon-leaf" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17 8C8 10 5.9 16.17 3.82 21.34l1.89.66.95-2.3c.48.17 1.05.3 1.74.3C19 20 22 3 22 3c-1 2-8 2.25-13 3.25S2 11.5 2 13.5s1.75 3.75 1.75 3.75C7 8 17 8 17 8z"/>
+    </svg>
+    <svg class="app-icon icon-chart" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M5 9h3v11H5V9zm6-6h3v17h-3V3zm6 9h3v8h-3v-8z"/>
+    </svg>
+    <svg class="app-icon icon-cap" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 3 1 9l11 6 9-4.91V17h2V9L12 3zM5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82z"/>
+    </svg>
+    <svg class="app-icon icon-target" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm0-14c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/>
+    </svg>
+</div>
 
 <main>
     <section class="activities">
