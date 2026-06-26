@@ -171,14 +171,24 @@ body {
 .btn-primary:disabled { opacity: 0.6; cursor: default; }
 
 .navbar {
-    background: #ffffff;
+    background: linear-gradient(135deg, #ffffff, var(--ew-mist) 140%);
     border-bottom: 1px solid #e7e5df;
     padding: 0.9rem 1.5rem;
     position: sticky;
     top: 0;
     z-index: 30;
+    box-shadow: 0 1px 0 rgba(19,36,31,0.03);
+}
+.navbar::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -3px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--ew-sage), var(--ew-teal), var(--ew-amber));
 }
 .nav-container {
+    position: relative;
+    z-index: 1;
     max-width: 1180px;
     margin: 0 auto;
     display: flex;
@@ -261,36 +271,37 @@ body {
     overflow: hidden;
     pointer-events: none;
     background:
-        radial-gradient(circle at 85% 8%, rgba(31,122,120,0.05), transparent 42%),
-        radial-gradient(circle at 8% 92%, rgba(232,169,76,0.06), transparent 42%),
+        radial-gradient(circle at 88% 4%, rgba(31,122,120,0.16), transparent 48%),
+        radial-gradient(circle at 4% 96%, rgba(232,169,76,0.16), transparent 48%),
+        radial-gradient(circle at 50% 50%, rgba(63,174,122,0.05), transparent 60%),
         var(--ew-mist);
 }
 .app-blob {
     position: absolute;
     border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.22;
+    filter: blur(60px);
+    opacity: 0.45;
     animation: blobDrift 30s ease-in-out infinite;
 }
 .app-blob-sage {
-    width: 32vw; height: 32vw;
-    max-width: 380px; max-height: 380px;
+    width: 34vw; height: 34vw;
+    max-width: 420px; max-height: 420px;
     background: radial-gradient(circle, var(--ew-sage), transparent 70%);
-    top: -8%; right: -6%;
+    top: -10%; right: -8%;
 }
 .app-blob-teal {
-    width: 26vw; height: 26vw;
-    max-width: 320px; max-height: 320px;
+    width: 28vw; height: 28vw;
+    max-width: 360px; max-height: 360px;
     background: radial-gradient(circle, var(--ew-teal-light), transparent 70%);
-    bottom: 5%; left: -6%;
+    bottom: 2%; left: -8%;
     animation-duration: 34s;
     animation-delay: -10s;
 }
 .app-blob-amber {
-    width: 20vw; height: 20vw;
-    max-width: 260px; max-height: 260px;
+    width: 22vw; height: 22vw;
+    max-width: 300px; max-height: 300px;
     background: radial-gradient(circle, var(--ew-amber), transparent 70%);
-    bottom: -10%; right: 18%;
+    bottom: -8%; right: 14%;
     animation-duration: 26s;
     animation-delay: -4s;
 }
@@ -298,16 +309,16 @@ body {
     position: absolute;
     inset: 0;
     background-image:
-        linear-gradient(rgba(19,36,31,0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(19,36,31,0.04) 1px, transparent 1px);
+        linear-gradient(rgba(19,36,31,0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(19,36,31,0.06) 1px, transparent 1px);
     background-size: 48px 48px;
-    mask-image: radial-gradient(circle at 50% 0%, rgba(0,0,0,0.5), transparent 70%);
+    mask-image: radial-gradient(circle at 50% 0%, rgba(0,0,0,0.6), transparent 75%);
 }
 .app-icon {
     position: absolute;
-    width: 30px;
-    height: 30px;
-    opacity: 0.07;
+    width: 38px;
+    height: 38px;
+    opacity: 0.13;
     animation: iconFloat 12s ease-in-out infinite;
 }
 .app-icon.icon-leaf   { top: 22%; left: 6%; color: var(--ew-sage); }
@@ -378,6 +389,7 @@ main { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
 .activity-card {
     background: #fff;
     border: 1px solid #e7e5df;
+    border-top: 3px solid var(--ew-sage);
     border-radius: 14px;
     padding: 1.4rem;
     display: flex;
@@ -385,6 +397,10 @@ main { max-width: 1180px; margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
     gap: 0.6rem;
     transition: box-shadow 0.18s, transform 0.18s;
 }
+.activity-card:nth-child(2) { border-top-color: var(--ew-teal); }
+.activity-card:nth-child(3) { border-top-color: var(--ew-amber); }
+.activity-card:nth-child(4) { border-top-color: var(--ew-teal); }
+.activity-card:nth-child(5) { border-top-color: var(--ew-sage); }
 .activity-card:hover { box-shadow: 0 14px 32px rgba(19,36,31,0.08); transform: translateY(-2px); }
 .activity-card .icon-badge {
     width: 46px; height: 46px;
@@ -481,6 +497,7 @@ th.lb-sortable:hover { color: var(--ew-ink); }
 .day-card {
     background: #fff;
     border: 2px solid #e7e5df;
+    border-top: 4px solid var(--ew-sage);
     border-radius: 18px;
     padding: 2.5rem 2rem;
     text-align: center;
@@ -497,6 +514,7 @@ th.lb-sortable:hover { color: var(--ew-ink); }
     background: radial-gradient(circle at 100% 0%, rgba(63,174,122,0.08), transparent 70%);
     z-index: 0;
 }
+.day-card:nth-child(2) { border-top-color: var(--ew-teal); }
 .day-card:nth-child(2)::before {
     background: radial-gradient(circle at 100% 0%, rgba(31,122,120,0.09), transparent 70%);
 }
@@ -565,6 +583,7 @@ th.lb-sortable:hover { color: var(--ew-ink); }
 .resource-card {
     background: #fff;
     border: 1px solid #e7e5df;
+    border-top: 3px solid var(--ew-sage);
     border-radius: 14px;
     padding: 1.5rem;
     display: flex;
@@ -572,6 +591,9 @@ th.lb-sortable:hover { color: var(--ew-ink); }
     gap: 0.8rem;
     transition: box-shadow 0.18s, transform 0.18s;
 }
+.resource-card:nth-child(2) { border-top-color: var(--ew-teal); }
+.resource-card:nth-child(3) { border-top-color: var(--ew-amber); }
+.resource-card:nth-child(4) { border-top-color: var(--ew-teal); }
 
 .resource-card:hover {
     box-shadow: 0 14px 32px rgba(19,36,31,0.08);
@@ -1085,56 +1107,55 @@ let currentDay = null; // tracks current day: 'day1', 'day2', or null
 function showTab(tab) {
     document.getElementById('tab-activities').classList.toggle('active', tab === 'activities');
     document.getElementById('tab-leaderboard').classList.toggle('active', tab === 'leaderboard');
-    document.getElementById('panel-activities').classList.toggle('hidden-panel', tab !== 'activities');
-    document.getElementById('panel-leaderboard').classList.toggle('hidden-panel', tab !== 'leaderboard');
-    if (tab === 'leaderboard' && !leaderboardLoaded) loadLeaderboard();
+
+    const showDay1 = tab === 'activities' && currentDay === 'day1';
+    const showDay2 = tab === 'activities' && currentDay === 'day2';
+    const showLeaderboard = tab === 'leaderboard';
+
+    document.getElementById('panel-day1').style.display = showDay1 ? 'block' : 'none';
+    document.getElementById('day1-case-study').style.display = showDay1 ? 'block' : 'none';
+    document.getElementById('panel-activities').style.display = showDay1 ? 'block' : 'none';
+    document.getElementById('panel-day2').style.display = showDay2 ? 'block' : 'none';
+
+    document.getElementById('panel-leaderboard').style.display = showLeaderboard ? 'block' : 'none';
+    document.getElementById('panel-leaderboard').classList.toggle('hidden-panel', !showLeaderboard);
+
+    if (showLeaderboard && !leaderboardLoaded) loadLeaderboard();
 }
 
 function selectDay(day) {
     currentDay = day;
-    
+
     // Hide day selector
     document.getElementById('panel-day-selector').style.display = 'none';
-    
-    // Show back button
+
+    // Show back button + tabs
     document.getElementById('back-to-days-btn').style.display = 'inline-block';
     document.getElementById('tab-activities').style.display = 'inline-block';
     document.getElementById('tab-leaderboard').style.display = 'inline-block';
-    
+    document.getElementById('tab-activities').textContent = day === 'day2' ? 'Day 2 Resources' : 'My Activities';
+
     if (day === 'day1') {
-        // Show Day 1 activities
-        document.getElementById('panel-day1').style.display = 'block';
-        document.getElementById('day1-case-study').style.display = 'block';
-        document.getElementById('panel-activities').style.display = 'block';
-        document.getElementById('panel-day2').style.display = 'none';
-        document.getElementById('tab-activities').classList.add('active');
-        document.getElementById('tab-leaderboard').classList.remove('active');
-        document.getElementById('panel-leaderboard').classList.add('hidden-panel');
         renderActivityCards();
         renderLeaderboardHead();
-    } else if (day === 'day2') {
-        // Show Day 2 resources
-        document.getElementById('panel-day1').style.display = 'none';
-        document.getElementById('day1-case-study').style.display = 'none';
-        document.getElementById('panel-activities').style.display = 'none';
-        document.getElementById('panel-day2').style.display = 'block';
-        document.getElementById('tab-activities').classList.remove('active');
-        document.getElementById('tab-leaderboard').classList.remove('active');
-        document.getElementById('panel-leaderboard').classList.add('hidden-panel');
     }
+
+    showTab('activities');
 }
 
 function backToDaySelector() {
     currentDay = null;
-    
+
     // Show day selector
     document.getElementById('panel-day-selector').style.display = 'block';
     document.getElementById('panel-day1').style.display = 'none';
+    document.getElementById('day1-case-study').style.display = 'none';
     document.getElementById('panel-activities').style.display = 'none';
     document.getElementById('panel-day2').style.display = 'none';
+    document.getElementById('panel-leaderboard').style.display = 'none';
     document.getElementById('panel-leaderboard').classList.add('hidden-panel');
-    
-    // Hide back button
+
+    // Hide back button + tabs
     document.getElementById('back-to-days-btn').style.display = 'none';
     document.getElementById('tab-activities').style.display = 'none';
     document.getElementById('tab-leaderboard').style.display = 'none';
@@ -1182,7 +1203,10 @@ function logout() {
     document.getElementById('panel-day-selector').style.display = 'none';
     document.getElementById('panel-activities').style.display = 'none';
     document.getElementById('panel-day1').style.display = 'none';
+    document.getElementById('day1-case-study').style.display = 'none';
     document.getElementById('panel-day2').style.display = 'none';
+    document.getElementById('panel-leaderboard').style.display = 'none';
+    document.getElementById('panel-leaderboard').classList.add('hidden-panel');
 }
 
 navUserTrigger.addEventListener('click', (e) => {
