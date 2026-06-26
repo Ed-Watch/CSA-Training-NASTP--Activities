@@ -943,7 +943,7 @@ th.lb-sortable:hover { color: var(--ew-ink); }
 <!-- ============================================================ -->
 <script>
 // ---- CONFIG: paste your Apps Script Web App URL here (must match the one in each activity page) ----
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwyJ4WSZSJBDwgLdGvY43ygE2hEXlE-1etkOU9GtlqiVfzcH3YdQGWFe2CtBt5013OLLQ/exec'; // ends in /exec
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzCkC2TMhK2c9vvyUYfRh1z2uLBppwWwwOlP0OcJjnWhK9TLNGtTJ8bsiPY9W--URIN/exec'; // ends in /exec
 
 // ---- Activity catalogue: edit file names here if yours differ ----
 const ACTIVITIES = [
@@ -1126,6 +1126,11 @@ function showTab(tab) {
 function selectDay(day) {
     currentDay = day;
 
+    // Remember the selected day so that returning here later (e.g. after
+    // finishing an activity and clicking "Return to Home") drops the user
+    // straight back into this day's dashboard instead of the day selector.
+    localStorage.setItem('edwatch_currentDay', day);
+
     // Hide day selector
     document.getElementById('panel-day-selector').style.display = 'none';
 
@@ -1145,6 +1150,7 @@ function selectDay(day) {
 
 function backToDaySelector() {
     currentDay = null;
+    localStorage.removeItem('edwatch_currentDay');
 
     // Show day selector
     document.getElementById('panel-day-selector').style.display = 'block';
@@ -1168,28 +1174,37 @@ function showLoggedInState(name, email) {
     activitiesSection.classList.remove('activities-locked');
     navUserBadge.style.display = 'inline-block';
     navUserName.textContent = '👤 ' + name;
-    
-    // Show day selector instead of activities directly
-    document.getElementById('panel-day-selector').style.display = 'block';
-    document.getElementById('panel-activities').style.display = 'none';
-    document.getElementById('panel-day1').style.display = 'none';
-    document.getElementById('panel-day2').style.display = 'none';
-    document.getElementById('tab-activities').style.display = 'none';
-    document.getElementById('tab-leaderboard').style.display = 'none';
-    document.getElementById('back-to-days-btn').style.display = 'none';
-    
-    // Update hero welcome
+
+    // Update hero welcome (shown on the day-selector screen, if we land there)
     const heroWelcome = document.querySelector('#panel-day-selector .hero-text h1');
     if (heroWelcome) {
         heroWelcome.textContent = `Welcome back, ${name.split(' ')[0]}!`;
     }
-    
+
+    // If the user was previously inside a specific day (most commonly: they
+    // just finished a Day 1 activity and clicked "Return to Home"), jump
+    // straight back into that day's dashboard rather than showing the day
+    // selector again.
+    const savedDay = localStorage.getItem('edwatch_currentDay');
+    if (savedDay === 'day1' || savedDay === 'day2') {
+        selectDay(savedDay);
+    } else {
+        document.getElementById('panel-day-selector').style.display = 'block';
+        document.getElementById('panel-activities').style.display = 'none';
+        document.getElementById('panel-day1').style.display = 'none';
+        document.getElementById('panel-day2').style.display = 'none';
+        document.getElementById('tab-activities').style.display = 'none';
+        document.getElementById('tab-leaderboard').style.display = 'none';
+        document.getElementById('back-to-days-btn').style.display = 'none';
+    }
+
     loadUserProgress(email);
 }
 
 function logout() {
     localStorage.removeItem('edwatch_name');
     localStorage.removeItem('edwatch_email');
+    localStorage.removeItem('edwatch_currentDay');
     navUserDropdown.classList.remove('open');
     navUserBadge.style.display = 'none';
     activitiesSection.classList.add('activities-locked');
