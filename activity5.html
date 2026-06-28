@@ -195,6 +195,31 @@
     }
 
     .hidden { display: none !important; }
+
+    /* ---- Part 2 (Activity 2 classification) mobile tweaks ---- */
+    @media (max-width: 640px) {
+      .chip {
+        padding: 7px 14px;
+        font-size: 0.8rem;
+      }
+
+      .classify-item {
+        padding: 14px 16px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      [id^="a2-item-btns-"] {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      [id^="a2-item-btns-"] .chip {
+        width: 100%;
+        text-align: center;
+        padding: 11px 14px;
+      }
+    }
   </style>
 </head>
 <body class="animated-bg min-h-screen flex justify-center items-start p-2 sm:p-4 md:p-6 relative overflow-hidden">
