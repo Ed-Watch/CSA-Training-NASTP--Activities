@@ -184,14 +184,11 @@
     .classify-item.answered { border-color: #a7f3d0; background: #ecfdf5; }
     .classify-item.answered-wrong { border-color: #fca5a5; background: #fff1f2; }
 
-    /* Scrollable on small screens */
+    /* Cards size naturally; the page itself scrolls (matches the script's
+       own window.scrollTo(0,0) calls when switching between screens) */
     .scroll-container {
-      max-height: calc(100vh - 4rem);
-      overflow-y: auto;
-    }
-
-    @media (max-width: 640px) {
-      .scroll-container { max-height: calc(100vh - 1rem); }
+      max-height: none;
+      overflow-y: visible;
     }
 
     .hidden { display: none !important; }
@@ -222,7 +219,7 @@
     }
   </style>
 </head>
-<body class="animated-bg min-h-screen flex justify-center items-start p-2 sm:p-4 md:p-6 relative overflow-hidden">
+<body class="animated-bg min-h-screen flex justify-center items-start p-2 sm:p-4 md:p-6 relative overflow-x-hidden">
 
   <!-- Decorative blobs -->
   <div class="floating-shape" style="width:120px;height:120px;background:#fff;border-radius:60% 40% 70% 30%;top:8%;left:6%;animation-delay:0s;"></div>
