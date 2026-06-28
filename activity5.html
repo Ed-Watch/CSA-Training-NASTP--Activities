@@ -416,6 +416,35 @@
 
 <script>
 // ─────────────────────────────────────
+// CONFIG: must match the URL used in index.html
+// ─────────────────────────────────────
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzCkC2TMhK2c9vvyUYfRh1z2uLBppwWwwOlP0OcJjnWhK9TLNGtTJ8bsiPY9W--URIN/exec';
+
+function getLoggedInEmail() {
+  return localStorage.getItem('edwatch_email') || '';
+}
+
+// Saves "score/total" to the given sheet column for the logged-in user.
+// Fails silently (logs a warning) so a network hiccup never blocks the UI.
+async function saveScoreToSheet(activityKey, scoreStr) {
+  const email = getLoggedInEmail();
+  if (!email) {
+    console.warn('EdWatch: no logged-in email found, score not saved for', activityKey);
+    return;
+  }
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=saveScore&email=${encodeURIComponent(email)}&activity=${encodeURIComponent(activityKey)}&score=${encodeURIComponent(scoreStr)}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data || !data.success) {
+      console.warn('EdWatch: saveScore failed for', activityKey, data && data.error);
+    }
+  } catch (err) {
+    console.warn('EdWatch: could not save score for', activityKey, err);
+  }
+}
+
+// ─────────────────────────────────────
 // DATA
 // ─────────────────────────────────────
 
@@ -590,6 +619,9 @@ function showA1Results() {
               '📚 Keep studying — scenario selection is a key skill.';
   document.getElementById('a1-score-label').textContent = label;
   document.getElementById('a1-progress').style.width = '100%';
+
+  // Save Part 1 result to the sheet's Activity5 column
+  saveScoreToSheet('Activity5', `${a1Score}/${A1_QUESTIONS.length}`);
 }
 
 // ─────────────────────────────────────
@@ -729,6 +761,9 @@ function showA2Results() {
               pct >= 0.6 ? '👍 Solid understanding of climate risk and data sources.' :
               '📚 Review the categories — these distinctions are essential for reporting.';
   document.getElementById('a2-score-label').textContent = label;
+
+  // Save Part 2 result to the sheet's Activity6 column
+  saveScoreToSheet('Activity6', `${a2TotalCorrect}/${total}`);
 }
 </script>
 </body>
